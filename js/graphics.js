@@ -21,7 +21,6 @@ const GEOMETRY = {
   CYLINDER    : new THREE.CylinderGeometry(),
   DODECAHEDRON: new THREE.DodecahedronGeometry(),
   ICOSAHEDRON : new THREE.IcosahedronGeometry(),
-  LATHE       : new THREE.LatheGeometry(),
   OCTAHEDRON  : new THREE.OctahedronGeometry(),
   PLANE       : new THREE.PlaneGeometry(),
   RING        : new THREE.RingGeometry(),
