@@ -6,6 +6,8 @@ var player = new Player();
 var gameNotOver = true;
 var grahics = new Graphics();
 
+var cube = new THREE.Mesh(geometry, material);
+
 function player_movement() {
 
   if (keyboard.GetKeyState('A')) {
