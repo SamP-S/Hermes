@@ -5,7 +5,7 @@ var keyboard = new Keyboard();
 var player = new Player();
 var gameNotOver = true
 
-function movement() {
+function player_movement() {
 
   if (keyboard.GetKeyState('A')]) {
     player.deltas[0] -= 0.5;
@@ -29,6 +29,16 @@ function movement() {
 function main() {
 
   while (gameNotOver) {
+
+    //requestAnimationFrame(animate);
+
+    // player_movement()
+    // other object movement Processing
+    // player.physics()
+    // other pyshics Processing
+    // Any other Processing
+
+    //graphics.animate();
 
   }
 }
