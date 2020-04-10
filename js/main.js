@@ -29,7 +29,6 @@ function movement() {
 function main() {
 
   while (gameNotOver) {
-    window.setTimeout(movement, 200);
 
   }
 }
