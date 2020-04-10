@@ -1,10 +1,36 @@
+// Camera Constants
 const ORTH = 2;
 var ASPECT = window.innerWidth/window.innerHeight;
+
+// Materials
+const MATERIAL = {
+  WHITE   : new THREE.MeshBasicMaterial( { color: 0xffffff } ),
+  BLACK   : new THREE.MeshBasicMaterial( { color: 0x000000 } ),
+  RED     : new THREE.MeshBasicMaterial( { color: 0xff0000 } ),
+  GREEN   : new THREE.MeshBasicMaterial( { color: 0x00ff00 } ),
+  BLUE    : new THREE.MeshBasicMaterial( { color: 0x0000ff } ),
+  YELLOW  : new THREE.MeshBasicMaterial( { color: 0xffff00 } ),
+  CYAN    : new THREE.MeshBasicMaterial( { color: 0x00ffff } ),
+  MAGENTA : new THREE.MeshBasicMaterial( { color: 0xff00ff } )
+}
+
+class Test_Object {
+  constructor() {
+    this.scene = new THREE.Scene();
+    this.geometry = new THREE.BoxGeometry();
+
+    this.cube = new THREE.Mesh(this.geometry, MATERIAL.CYAN);
+    this.scene.add(this.cube);
+
+    this.lines = new THREE.Line(this.geometry, MATERIAL.BLACK);
+    this.scene.add(this.lines);
+  }
+}
 
 class Graphics {
 
   constructor() {
-      this.scene = new THREE.Scene();
+
       // perspective camera ->k // this.camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
       this.camera = new THREE.OrthographicCamera(-ORTH * ASPECT, ORTH * ASPECT, -ORTH, ORTH, -ORTH, ORTH);
       //this.camera.position.z = 5;
@@ -20,13 +46,7 @@ class Graphics {
       // Resize Event Listener <-- ADD LATER
       //window.addEventListener("resize", this.windowResize);
 
-      this.geometry = new THREE.BoxGeometry();
-      this.material = new THREE.MeshBasicMaterial( { color: 0x00ffff } );
-      this.cube = new THREE.Mesh(this.geometry, this.material);
-      this.scene.add(this.cube);
-      this.material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
-      this.lines = new THREE.Line(this.geometry, this.material);
-      this.scene.add(this.lines);
+
   }
 
   /*
