@@ -73,5 +73,6 @@ class Keyboard {
       // Escape
       case 27: // Escape
         return this.data[4];
+      }
   }
 }
