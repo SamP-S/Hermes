@@ -8,7 +8,7 @@ class Keyboard {
   constructor() {
     document.addEventListener('keydown', this.KeyDown);
     document.addEventListener('keyup', this.KeyUp);
-    this.data[5] = [ false, false, false, false, false ];
+    this.data = [ false, false, false, false, false ];
   }
 
   KeyDown(event) {
