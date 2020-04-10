@@ -8,9 +8,13 @@ class Player {
     this.deltas = [0, 0];
   }
 
-  physics() {
+  physics(floor) {
     this.deltas[0] *= 0.9; // friction
-    this.deltas[1] -= 1.5; // friction
+    if (player.pos.y > floor) {
+      this.deltas[1] -= 1.5; // gravity
+    } else {
+      this.deltas[1] = 0; // can't go thru floor lmfao
+    }
   }
 
   move() {
