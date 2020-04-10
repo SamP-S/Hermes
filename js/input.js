@@ -7,8 +7,7 @@ var KEY = {
 // Keyboard class for managing user input
 class Keyboard {
   constructor() {
-    addEventListener('keydown', this.KeyDown);
-    this.addEventListener('keyup', this.KeyUp);
+    
     this.data = [ false, false, false, false, false ];
   }
 
