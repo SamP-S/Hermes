@@ -37,7 +37,7 @@ class Graphics {
   */
 
   // render/animation loop
-  render() {
+  test_render() {
       this.cube.rotation.x += 0.01;
       this.cube.rotation.y += 0.01;
       this.lines.rotation.x += 0.01;
