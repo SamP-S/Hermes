@@ -48,7 +48,7 @@ class Graphics {
   constructor() {
 
       // perspective camera ->k // this.camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-      this.camera = new THREE.OrthographicCamera(-ORTH * ASPECT, ORTH * ASPECT, -ORTH, ORTH, -ORTH, ORTH);
+      this.camera = new THREE.OrthographicCamera(-ORTH, ORTH, -ORTH, ORTH, -ORTH, ORTH);
       //this.camera.position.z = 5;
       this.renderer = new THREE.WebGLRenderer();
 
@@ -56,6 +56,7 @@ class Graphics {
       this.renderer.setSize(window.innerWidth, window.innerHeight);
       this.renderer.setClearColor(0xffffff);
       this.renderer.antialias = true;
+      this.renderer.autoClear = false;
       this.renderer.domElement.style.border = "solid";
       document.body.appendChild(this.renderer.domElement);
 
@@ -91,17 +92,17 @@ class Graphics {
     }
 
     let points = [];
-    points.push(world_x.min * ASPECT, world_y.min, 0);
-    points.push(world_x.min * ASPECT, world_y.max, 0);
-    points.push(world_x.max * ASPECT, world_y.max, 0);
-    points.push(world_x.max * ASPECT, world_y.min, 0);
-
+    points.push(world_x.min, world_y.min, 0);
+    points.push(world_x.min, world_y.max, 0);
+    points.push(world_x.max, world_y.max, 0);
+    points.push(world_x.max, world_y.min, 0);
+    
     let geometry = new THREE.BufferGeometry().setFromPoints(points)
     let material = new THREE.MeshBasicMaterial( { color : colour } )
     let mesh = new THREE.Mesh(geometry, material);
     let scene = new THREE.Scene();
     scene.add(mesh);
-    this.renderer.render(scene, this.camera);
+    this.render(scene);
   }
 
   render(scene) {
