@@ -5,6 +5,7 @@ var keyboard = new Keyboard();
 var player = new Player();
 var gameNotOver = true;
 var graphics = new Graphics();
+var test = new Test_Object();
 
 function player_movement() {
 
@@ -54,6 +55,6 @@ function main() {
   // other pyshics Processing
   // Any other Processing
 
-  //graphics.test_render();
+  graphics.render(test.scene)
 
 }
