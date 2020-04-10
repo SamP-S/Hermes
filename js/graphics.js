@@ -1,5 +1,5 @@
 // Camera Constants
-const ORTH = 2;
+const ORTH = 1;
 var ASPECT = window.innerWidth/window.innerHeight;
 
 // Materials
@@ -72,25 +72,48 @@ class Graphics {
   }
   */
 
-  render(scene) {
+  // Draws Filled rectangle using pixel co-ordinates
+  // enter colour as hex -> 0x------
+  drawRectangle(pixel_x, pixel_y, pixel_w, pixel_h, colour) {
+    let size = {
+      w: this.renderer.domElement.width ,
+      h: this.renderer.domElement.height
+    };
+
+    let world_x = {
+      min: (pixel_x / size.w) * 2 - 1,
+      max: ((pixel_x + pixel_w) / size.w ) * 2 - 1,
+    }
+
+    let world_y = {
+      min: (pixel_y / size.h) * 2 - 1,
+      max: ((pixel_y + pixel_h) / size.h ) * 2 - 1,
+    }
+
+    let points = [];
+    points.push(world_x.min * ASPECT, world_y.min, 0);
+    points.push(world_x.min * ASPECT, world_y.max, 0);
+    points.push(world_x.max * ASPECT, world_y.max, 0);
+    points.push(world_x.max * ASPECT, world_y.min, 0);
+
+    let geometry = new THREE.BufferGeometry().setFromPoints(points)
+    let material = new THREE.MeshBasicMaterial( { color : colour } )
+    let mesh = new THREE.Mesh(geometry, material);
+    let scene = new THREE.Scene();
+    scene.add(mesh);
     this.renderer.render(scene, this.camera);
   }
 
-  // render/animation loop
-  test_render() {
-      this.cube.rotation.x += 0.01;
-      this.cube.rotation.y += 0.01;
-      this.lines.rotation.x += 0.01;
-      this.lines.rotation.y += 0.01;
-
-      this.renderer.render(this.scene, this.camera);
+  render(scene) {
+    this.renderer.render(scene, this.camera);
   }
 }
 
-function GetSquareGeometry() {
+function getSquareGeometry() {
   var points = [];
-  points.push( new THREE.Vector3( 1, 0, 0 ) );
-  points.push( new THREE.Vector3( 0, 10, 0 ) );
-  points.push( new THREE.Vector3( 10, 0, 0 ) );
-  var geometry = new THREE.BufferGeometry().setFromPoints( points );
+  points.push(new THREE.Vector3(0, 0, 0));
+  points.push(new THREE.Vector3(0, 1, 0));
+  points.push(new THREE.Vector3(1, 1, 0));
+  points.push(new THREE.Vector3(1, 0, 0));
+  var geometry = new THREE.BufferGeometry().setFromPoints(points);
 }
