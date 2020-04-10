@@ -6,10 +6,6 @@ var player = new Player();
 var gameNotOver = true;
 var grahics = new Graphics();
 
-var geometry = new THREE.BoxGeometry();
-var material = new THREE.MeshBasicMaterial( { color: 0x00ffff } );
-var cube = new THREE.Mesh(geometry, material);
-
 function player_movement() {
 
   if (keyboard.GetKeyState('A')) {
@@ -31,21 +27,33 @@ function player_movement() {
 
 }
 
+
+// WebGL compatibility check
+if (!graphics.renderer) {
+  let p = document.createElement("P");
+	p.innerHTML = "ERROR: WebGL is NOT supported";
+	document.body.appendChild(p);
+} else {
+  // Initiation Functions
+  // ...
+  document.addEventListener('keydown', function(event) { keyboard.KeyDown(event) } );
+  document.addEventListener('keyup', function(event) { keyboard.KeyUp(event) } );
+  // Enter main loop
+  main();
+}
+
+
 function main() {
 
-  while (gameNotOver) {
+  requestAnimationFrame(main);
 
-    //requestAnimationFrame(animate);
-    graphics.render()
-    graphics.scene.add(cube)
-    graphics.render()
-    // player_movement()
-    // other object movement Processing
-    // player.physics()
-    // other pyshics Processing
-    // Any other Processing
-
-    //graphics.animate();
+  //requestAnimationFrame(animate);
+  graphics.render();
+  // player_movement()
+  // other object movement Processing
+  // player.physics()
+  // other pyshics Processing
+  // Any other Processing
 
   }
 }

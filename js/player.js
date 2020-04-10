@@ -1,10 +1,14 @@
 class Player {
   constructor() {
-    this.pos = [100, 100]
+    this.pos = { x: -1, y: -1 };
     this.mass = 80;
     this.jumping = [false, false];
     this.dbljump = false;
     this.deltas = [0, 0];
+  }
+
+  render() {
+    console.log("x: ", this.pos.x, " y: ". this.pos.y);
   }
 
   physics(floor) {
