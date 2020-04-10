@@ -5,22 +5,22 @@ class Graphics {
         this.renderer = new THREE.WebGLRenderer();
 
         // Renderer Properties
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setClearColor(0xffffff);
-        renderer.antialias = true;
-        renderer.domElement.style.border = "solid";
-        document.body.appendChild(renderer.domElement);
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.renderer.setClearColor(0xffffff);
+        this.renderer.antialias = true;
+        this.renderer.domElement.style.border = "solid";
+        document.body.appendChild(this.renderer.domElement);
 
         // Resize Event Listener
         window.addEventListener("resize", windowResize);
 
         this.geometry = new THREE.BoxGeometry();
         this.material = new THREE.MeshBasicMaterial( { color: 0x00ffff } );
-        this.cube = new THREE.Mesh(geometry, material);
-        this.scene.add(cube);
+        this.cube = new THREE.Mesh(this.geometry, this.material);
+        this.scene.add(this.cube);
         this.material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
-        this.lines = new THREE.Line(geometry, material);
-        this.scene.add(lines);
+        this.lines = new THREE.Line(this.geometry, this.material);
+        this.scene.add(this.lines);
     }
 
     windowResize() {
@@ -38,6 +38,6 @@ class Graphics {
         this.lines.rotation.y += 0.01;
         this.lines.rotation.z += 0.01;
 
-        this.renderer.render(scene, camera);
+        this.renderer.render(this.scene, this.camera);
     }
 }
