@@ -69,11 +69,11 @@ class Keyboard {
     }
 
     KeyDown(event) {
-      SetKeyState(event.keyCode, KEY_DOWN);
+      SetKeyState(event.keyCode, KEY.KEY_DOWN);
     }
 
     KeyUp(event) {
-      SetKeyState(event.keyCode, KEY_UP);
+      SetKeyState(event.keyCode, KEY.KEY_UP);
     }
 
   }
