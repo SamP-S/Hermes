@@ -8,7 +8,7 @@ var grahics = new Graphics();
 
 function player_movement() {
 
-  if (keyboard.GetKeyState('A')]) {
+  if (keyboard.GetKeyState('A')) {
     player.deltas[0] -= 0.5;
   } /* else if (player.deltas[0] < 0 ) {
     player.deltas[0] += 1;
@@ -32,7 +32,7 @@ function main() {
   while (gameNotOver) {
 
     //requestAnimationFrame(animate);
-
+    graphics.render()
     // player_movement()
     // other object movement Processing
     // player.physics()
