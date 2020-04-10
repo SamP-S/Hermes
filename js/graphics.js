@@ -14,6 +14,23 @@ const MATERIAL = {
   MAGENTA : new THREE.MeshBasicMaterial( { color: 0xff00ff } )
 }
 
+const GEOMETRY = {
+  CUBE        : new THREE.BoxGeometry(),
+  CIRCLE      : new THREE.CircleGeometry(),
+  CONE        : new THREE.ConeGeometry(),
+  CYLINDER    : new THREE.CylinderGeometry(),
+  DODECAHEDRON: new THREE.DodecahedronGeometry(),
+  ICOSAHEDRON : new THREE.IcosahedronGeometry(),
+  LATHE       : new THREE.LatheGeometry(),
+  OCTAHEDRON  : new THREE.OctahedronGeometry(),
+  PLANE       : new THREE.PlaneGeometry(),
+  RING        : new THREE.RingGeometry(),
+  SPHERE      : new THREE.SphereGeometry(),
+  TETRAHEDRON : new THREE.TetrahedronGeometry(),
+  TORUS       : new THREE.TorusGeometry(),
+  TORUSKNOT   : new THREE.TorusKnotGeometry()
+}
+
 class Test_Object {
   constructor() {
     this.scene = new THREE.Scene();
@@ -55,6 +72,10 @@ class Graphics {
     this.renderer.setSize(window.innerWidth, window.innerHeight);
   }
   */
+
+  render(scene) {
+    this.renderer.render(scene, this.camera);
+  }
 
   // render/animation loop
   test_render() {
