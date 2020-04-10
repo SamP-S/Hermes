@@ -48,12 +48,13 @@ function main() {
   requestAnimationFrame(main);
 
   //requestAnimationFrame(animate);
-  graphics.render();
   // player_movement()
   // other object movement Processing
   // player.physics()
   // other pyshics Processing
   // Any other Processing
+
+  graphics.render();
 
   }
 }
