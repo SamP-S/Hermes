@@ -4,7 +4,7 @@
 var keyboard = new Keyboard();
 var player = new Player();
 var gameNotOver = true;
-var grahics = new Graphics();
+var graphics = new Graphics();
 
 function player_movement() {
 
