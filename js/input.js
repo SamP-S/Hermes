@@ -1,22 +1,14 @@
 // Relevant Keys -> w,a,s,d,up,down,left,right,escape
-Enum {
-  KEY_DOWN = true,
-  KEY_UP = false
+var KEY = {
+  KEY_DOWN: true,
+  KEY_UP: false
 }
+
 // Keyboard class for managing user input
 class Keyboard {
   constructor() {
-    document.addEventListener('keydown', this.KeyDown);
-    document.addEventListener('keyup', this.KeyUp);
-    this.data[5] = { false, false, false, false, false };
-  }
 
-  KeyDown(event) {
-    SetKeyState(event.keyCode, KEY_DOWN);
-  }
-
-  KeyUp(event) {
-    SetKeyState(event.keyCode, KEY_UP);
+    this.data = [ false, false, false, false, false ];
   }
 
   SetKeyState(keyCode, state) {
@@ -73,5 +65,15 @@ class Keyboard {
       // Escape
       case 27: // Escape
         return this.data[4];
+      }
   }
+
+  KeyDown(event) {
+    this.SetKeyState(event.keyCode, KEY.KEY_DOWN);
+  }
+
+  KeyUp(event) {
+    this.SetKeyState(event.keyCode, KEY.KEY_UP);
+  }
+
 }
