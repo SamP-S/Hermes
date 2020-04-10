@@ -67,14 +67,14 @@ class Keyboard {
       case 27: // Escape
         return this.data[4];
     }
-
-    KeyDown(event) {
-      SetKeyState(event.keyCode, KEY.KEY_DOWN);
-    }
-
-    KeyUp(event) {
-      SetKeyState(event.keyCode, KEY.KEY_UP);
-    }
-
   }
+
+  KeyDown(event) {
+    SetKeyState(event.keyCode, KEY.KEY_DOWN);
+  }
+
+  KeyUp(event) {
+    SetKeyState(event.keyCode, KEY.KEY_UP);
+  }
+
 }
