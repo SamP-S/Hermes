@@ -6,6 +6,8 @@ var player = new Player();
 var gameNotOver = true;
 var grahics = new Graphics();
 
+var geometry = new THREE.BoxGeometry();
+var material = new THREE.MeshBasicMaterial( { color: 0x00ffff } );
 var cube = new THREE.Mesh(geometry, material);
 
 function player_movement() {
@@ -34,6 +36,8 @@ function main() {
   while (gameNotOver) {
 
     //requestAnimationFrame(animate);
+    graphics.render()
+    graphics.scene.add(cube)
     graphics.render()
     // player_movement()
     // other object movement Processing
