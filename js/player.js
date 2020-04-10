@@ -1,7 +1,6 @@
 class Player {
   constructor() {
-    this.pos.x = 100;
-    this.pos.y = 100;
+    this.pos = [100, 100]
     this.mass = 80;
     this.jumping = [false, false];
     this.dbljump = false;
@@ -16,12 +15,12 @@ class Player {
     } else {
       this.deltas[1] = 0; // can't go thru floor lmfao
     }
-    
+
   }
 
   move() {
-    this.pos.x += this.deltas[0];
-    this.pos.y += this.deltas[1];
+    this.pos[0] += this.deltas[0];
+    this.pos[1] += this.deltas[1];
   }
 
 };
