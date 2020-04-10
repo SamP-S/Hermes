@@ -3,7 +3,8 @@
 
 var keyboard = new Keyboard();
 var player = new Player();
-var gameNotOver = true
+var gameNotOver = true;
+var grahics = new Graphics();
 
 function player_movement() {
 

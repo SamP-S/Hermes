@@ -1,7 +1,7 @@
 // Relevant Keys -> w,a,s,d,up,down,left,right,escape
-Enum {
-  KEY_DOWN = true,
-  KEY_UP = false
+var KEY = {
+  KEY_DOWN: true,
+  KEY_UP: false
 }
 // Keyboard class for managing user input
 class Keyboard {
