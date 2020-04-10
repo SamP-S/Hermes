@@ -46,3 +46,11 @@ class Graphics {
       this.renderer.render(this.scene, this.camera);
   }
 }
+
+function GetSquareGeometry() {
+  var points = [];
+  points.push( new THREE.Vector3( 1, 0, 0 ) );
+  points.push( new THREE.Vector3( 0, 10, 0 ) );
+  points.push( new THREE.Vector3( 10, 0, 0 ) );
+  var geometry = new THREE.BufferGeometry().setFromPoints( points );
+}
