@@ -7,7 +7,7 @@ var KEY = {
 // Keyboard class for managing user input
 class Keyboard {
   constructor() {
-    
+
     this.data = [ false, false, false, false, false ];
   }
 
@@ -65,7 +65,7 @@ class Keyboard {
       // Escape
       case 27: // Escape
         return this.data[4];
-    }
+      }
   }
 
   KeyDown(event) {

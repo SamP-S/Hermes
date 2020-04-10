@@ -3,7 +3,29 @@
 
 var keyboard = new Keyboard();
 var player = new Player();
-var graphics = new Graphics();
+var gameNotOver = true;
+var grahics = new Graphics();
+
+function player_movement() {
+
+  if (keyboard.GetKeyState('A')) {
+    player.deltas[0] -= 0.5;
+  } /* else if (player.deltas[0] < 0 ) {
+    player.deltas[0] += 1;
+  } */
+
+  if (keyboard.GetKeyState('W') && !player.jumping[0]) {
+    player.deltas[1] += 20;
+    player.jumping[0] = true
+  }
+
+  if (keyboard.GetKeyState('D')) {
+    player.deltas[0] += 0.5;
+  } /* else if (player.deltas[0] > 0 ) {
+    player.deltas[0] -= 1;
+  } */
+
+}
 
 
 // WebGL compatibility check
@@ -20,9 +42,18 @@ if (!graphics.renderer) {
   main();
 }
 
+
 function main() {
+
   requestAnimationFrame(main);
 
-
+  //requestAnimationFrame(animate);
   graphics.render();
+  // player_movement()
+  // other object movement Processing
+  // player.physics()
+  // other pyshics Processing
+  // Any other Processing
+
+  }
 }
