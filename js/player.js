@@ -8,6 +8,11 @@ class Player {
     this.deltas = [0, 0];
   }
 
+  physics() {
+    this.deltas[0] *= 0.9; // friction
+    this.deltas[1] -= 1.5; // friction
+  }
+
   move() {
     this.pos.x += this.deltas[0];
     this.pos.y += this.deltas[1];
