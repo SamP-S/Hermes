@@ -12,7 +12,7 @@ class Graphics {
         document.body.appendChild(this.renderer.domElement);
 
         // Resize Event Listener
-        window.addEventListener("resize", windowResize);
+        window.addEventListener("resize", this.windowResize);
 
         this.geometry = new THREE.BoxGeometry();
         this.material = new THREE.MeshBasicMaterial( { color: 0x00ffff } );
