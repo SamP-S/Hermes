@@ -12,7 +12,7 @@ class Graphics {
         document.body.appendChild(this.renderer.domElement);
 
         // Resize Event Listener
-        window.addEventListener("resize", windowResize);
+        // window.addEventListener("resize", this.windowResize);
 
         this.geometry = new THREE.BoxGeometry();
         this.material = new THREE.MeshBasicMaterial( { color: 0x00ffff } );
@@ -22,12 +22,12 @@ class Graphics {
         this.lines = new THREE.Line(this.geometry, this.material);
         this.scene.add(this.lines);
     }
-
+/*
     windowResize() {
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
         this.renderer.setSize(window.innerWidth, window.innerHeight);
     }
-
+*/
     // render/animation loop
     render() {
         this.camera.position.z = 5;
