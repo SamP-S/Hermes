@@ -49,6 +49,13 @@ const GEOMETRY = {
   TORUSKNOT   : new THREE.TorusKnotGeometry()
 }
 
+function screen_to_world(coordinates, graphics) {
+  return {
+    x: (coordinates.x / graphics.renderer.domElement.width) * 2 - 1,
+    y: (coordinates.y / graphics.renderer.domElement.height) * 2 - 1
+  };
+}
+
 class Test_Object {
   constructor() {
     this.scene = new THREE.Scene();
