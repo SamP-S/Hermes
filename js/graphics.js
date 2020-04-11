@@ -2,16 +2,29 @@
 const ORTH = 1;
 var ASPECT = window.innerWidth/window.innerHeight;
 
+// Colours
+const COLOURS = {
+  WHITE   : 0xffffff,
+  BLACK   : 0x000000,
+  RED     : 0xff0000,
+  GREEN   : 0x00ff00,
+  BLUE    : 0x0000ff,
+  YELLOW  : 0xffff00,
+  CYAN    : 0x00ffff,
+  MAGENTA : 0xff00ff
+}
+
+
 // Materials
 const MATERIAL = {
-  WHITE   : new THREE.MeshBasicMaterial( { color: 0xffffff } ),
-  BLACK   : new THREE.MeshBasicMaterial( { color: 0x000000 } ),
-  RED     : new THREE.MeshBasicMaterial( { color: 0xff0000 } ),
-  GREEN   : new THREE.MeshBasicMaterial( { color: 0x00ff00 } ),
-  BLUE    : new THREE.MeshBasicMaterial( { color: 0x0000ff } ),
-  YELLOW  : new THREE.MeshBasicMaterial( { color: 0xffff00 } ),
-  CYAN    : new THREE.MeshBasicMaterial( { color: 0x00ffff } ),
-  MAGENTA : new THREE.MeshBasicMaterial( { color: 0xff00ff } )
+  WHITE   : new THREE.MeshBasicMaterial( { color: COLOURS.WHITE } ),
+  BLACK   : new THREE.MeshBasicMaterial( { color: COLOURS.BLACK } ),
+  RED     : new THREE.MeshBasicMaterial( { color: COLOURS.RED } ),
+  GREEN   : new THREE.MeshBasicMaterial( { color: COLOURS.GREEN } ),
+  BLUE    : new THREE.MeshBasicMaterial( { color: COLOURS.BLUE } ),
+  YELLOW  : new THREE.MeshBasicMaterial( { color: COLOURS.YELLOW } ),
+  CYAN    : new THREE.MeshBasicMaterial( { color: COLOURS.CYAN } ),
+  MAGENTA : new THREE.MeshBasicMaterial( { color: COLOURS.MAGENTA } )
 }
 
 const GEOMETRY = {
@@ -96,7 +109,7 @@ class Graphics {
     points.push(world_x.min, world_y.max, 0);
     points.push(world_x.max, world_y.max, 0);
     points.push(world_x.max, world_y.min, 0);
-    
+
     let geometry = new THREE.BufferGeometry().setFromPoints(points)
     let material = new THREE.MeshBasicMaterial( { color : colour } )
     let mesh = new THREE.Mesh(geometry, material);
