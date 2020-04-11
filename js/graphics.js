@@ -6,13 +6,17 @@ var ASPECT = window.innerWidth/window.innerHeight;
 const COLOURS = {
   WHITE   : 0xffffff,
   BLACK   : 0x000000,
+  LGREY   : 0xa3a3a3,
+  MGREY   : 0x636363,
+  DGREY   : 0x4a4a4a,
   RED     : 0xff0000,
   GREEN   : 0x00ff00,
   BLUE    : 0x0000ff,
   YELLOW  : 0xffff00,
   CYAN    : 0x00ffff,
   MAGENTA : 0xff00ff,
-  GREY    : 0xAAAAAA
+  GREY    : 0xAAAAAA,
+  LAVA    : 0x455063
 }
 
 
