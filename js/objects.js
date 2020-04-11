@@ -6,7 +6,7 @@ class Base_Object {
       this.deltas = { dx: 0, dy: 0};
       this.dimensions = {width: dimensions[0], height: dimensions[1]};
       this.fixed_y = true;
-      this.colour = colour;
+      this.colour = COLOURS.LGREY;  // Set base colour light grey cause nice
       this.type=type
       console.log("creating new object type: " + type)
   }
@@ -34,7 +34,7 @@ class Base_Object {
 };
 
 class Enemy extends Base_Object {
-  constructor(dimensions, start_pos, colour=colours.RED, type="enemy_base"){
+  constructor(dimensions, start_pos, colour = COLOURS.RED, type="enemy_base"){
     super(dimensions, start_pos, colour, type)
   }
 
@@ -46,6 +46,6 @@ class Enemy extends Base_Object {
 
 class Lava extends Enemy {
   constructor(){
-    super([40, 20], [200, 380], colours.LAVA, "enemy_lava")
+    super([40, 20], [200, 380], COLOURS.LAVA, "enemy_lava")
   }
 }
