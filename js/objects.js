@@ -19,4 +19,10 @@ class object {
     this.pos.y += this.deltas.dy;
   }
 
+  kill() {
+    // graphically kill object
+    console.log("rufus gettin deaded:)")
+    delete this
+  }
+
 };
