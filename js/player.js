@@ -34,7 +34,7 @@ class Player {
     this.pos.x += this.deltas.dx;
     if (!legal_move(all_objects)){
       this.pos.x -= this.deltas.dx;
-      this.deltas.dx; = 0
+      this.deltas.dx = 0;
     }
     this.pos.y += this.deltas.dy;
     if (!legal_move(all_objects)){

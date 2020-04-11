@@ -1,12 +1,12 @@
 var colours = new Colours();
 
 class Object {
-  constructor() {
-      this.pos = {x: 0, y:0}; // Top left corner of shape (if rect), otherwise centre.
+  constructor(dimensions=[10,10], start_pos=[0,0], colour=colours.GREY) {
+      this.pos = {x: start_pos[0], y:start_pos[0]}; // Top left corner of shape (if rect), otherwise centre.
       this.deltas = { dx: 0, dy: 0};
-      this.dimensions = {width: 0, height: 0};
-      this.color = colours.MGREY;
+      this.dimensions = {width: dimensions[0], height: dimensions[1]};
       this.fixed_y = true;
+      this.colour = colour;
   }
 
   draw() {
@@ -28,5 +28,8 @@ class Object {
 };
 
 class Enemy extends Object {
+  constructor(dimensions, start_pos){
+    super.constructor(dimensions, start_pos, colours.RED)
 
+  }
 };
