@@ -1,6 +1,6 @@
 var colours = new Colours();
 
-class object {
+class Object {
   constructor() {
       this.pos = {x: 0, y:0}; // Top left corner of shape (if rect), otherwise centre.
       this.deltas = { dx: 0, dy: 0};
@@ -24,5 +24,9 @@ class object {
     console.log("rufus gettin deaded:)")
     delete this
   }
+
+};
+
+class Enemy extends Object {
 
 };
