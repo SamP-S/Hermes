@@ -1,7 +1,6 @@
 // Camera Constants
 const ORTH = 1;
 var ASPECT = window.innerWidth/window.innerHeight;
-var colours = new Colours();
 
 // Colours
 const COLOURS = {
@@ -12,7 +11,8 @@ const COLOURS = {
   BLUE    : 0x0000ff,
   YELLOW  : 0xffff00,
   CYAN    : 0x00ffff,
-  MAGENTA : 0xff00ff
+  MAGENTA : 0xff00ff,
+  GREY    : 0xAAAAAA
 }
 
 
@@ -77,13 +77,6 @@ class Graphics {
       // Resize Event Listener <-- ADD LATER
       //window.addEventListener("resize", this.windowResize);
 
-      this.geometry = new THREE.BoxGeometry();
-      this.material = new THREE.MeshBasicMaterial( { color: colours.CYAN } );
-      this.cube = new THREE.Mesh(this.geometry, this.material);
-      this.scene.add(this.cube);
-      this.material = new THREE.MeshBasicMaterial( { color: colours.BLACK } );
-      this.lines = new THREE.Line(this.geometry, this.material);
-      this.scene.add(this.lines);
   }
 
   /*
@@ -117,7 +110,15 @@ class Graphics {
     points.push(world_x.max, world_y.max, 0);
     points.push(world_x.max, world_y.min, 0);
 
-    let geometry = new THREE.BufferGeometry().setFromPoints(points)
+    let vertices = new Float32Array( [
+      0,    0,    0,
+      0.5,  0,    0,
+      0.5,  0.5,  0,
+      0,    0.5,  0
+    ] );
+
+    let geometry = new THREE.BufferGeometry();
+    geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
     let material = new THREE.MeshBasicMaterial( { color : colour } )
     let mesh = new THREE.Mesh(geometry, material);
     let scene = new THREE.Scene();

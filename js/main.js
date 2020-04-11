@@ -54,7 +54,6 @@ function main() {
   // other pyshics Processing
   // Any other Processing
   graphics.renderer.clear();
-  graphics.drawRectangle(0, 0, 100, 100, 0x000000)
-  graphics.render(test.scene)
+  graphics.drawRectangle(0, 0, 100, 100, COLOURS.GREY);
 
 }
