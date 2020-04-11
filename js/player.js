@@ -7,7 +7,7 @@ class Player {
     this.dimensions = {width: 20, height: 20};
     this.jumping = [false, false];
     this.dbljump = false;
-    this.deltas = [0, 0];
+    this.deltas = { dx: 0, dy: 0};
     this.colour = colours.MAGENTA;
     this.lives = 3
   }
@@ -17,20 +17,20 @@ class Player {
   }
 
   physics(floor) {
-    this.deltas[0] *= 0.9; // friction
+    this.deltas.dx *= 0.9; // friction
 
     if (player.pos.y > floor) {
-      this.deltas[1] -= 1.5; // gravity
+      this.deltas.dy -= 1.5; // gravity
     } else {
-      this.deltas[1] = 0; // can't go thru floor lmfao
+      this.deltas.dy = 0; // can't go thru floor lmfao
     }
 
   }
 
   move() {
     this.physics()
-    this.pos[0] += this.deltas[0];
-    this.pos[1] += this.deltas[1];
+    this.pos.x += this.deltas.dx;
+    this.pos.y += this.deltas.dy;
   }
 
 // only deals with rectangular objects -- implement SAT if need to deal with more complex shapes
