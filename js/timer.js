@@ -9,7 +9,7 @@ class Timer {
 
   // resets the timer to 0
   start() {
-    reset();
+    this.reset();
   }
 
   // resets the timer to 0
