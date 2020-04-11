@@ -1,5 +1,6 @@
 const ORTH = 2;
 var ASPECT = window.innerWidth/window.innerHeight;
+var colours = new Colours();
 
 class Graphics {
 
@@ -21,10 +22,10 @@ class Graphics {
       //window.addEventListener("resize", this.windowResize);
 
       this.geometry = new THREE.BoxGeometry();
-      this.material = new THREE.MeshBasicMaterial( { color: 0x00ffff } );
+      this.material = new THREE.MeshBasicMaterial( { color: colours.CYAN } );
       this.cube = new THREE.Mesh(this.geometry, this.material);
       this.scene.add(this.cube);
-      this.material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+      this.material = new THREE.MeshBasicMaterial( { color: colours.BLACK } );
       this.lines = new THREE.Line(this.geometry, this.material);
       this.scene.add(this.lines);
   }

@@ -1,4 +1,4 @@
-class colours {
+class Colours {
   constructor(){
     this.WHITE   = 0xffffff;
     this.LGREY   = 0xa3a3a3;
