@@ -5,6 +5,8 @@ var keyboard = new Keyboard();
 var player = new Player();
 var gameNotOver = true;
 var graphics = new Graphics();
+var floor = 20; // sets height of bottom of screen for sprites
+
 
 function player_movement() {
 
