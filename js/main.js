@@ -40,6 +40,8 @@ if (!graphics.renderer) {
   main();
 }
 
+let lava = new Lava();
+lava.draw();
 
 function main() {
 

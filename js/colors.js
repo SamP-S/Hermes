@@ -11,5 +11,6 @@ class Colours {
     this.YELLOW  = 0xffff00;
     this.CYAN    = 0x00ffff;
     this.MAGENTA = 0xff00ff;
+    this.LAVA    = 0xde8f18;
   }
 };
