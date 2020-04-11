@@ -48,7 +48,6 @@ function main() {
 
   requestAnimationFrame(main);
 
-
   // player_movement()
   // other object movement Processing
   // player.physics()
