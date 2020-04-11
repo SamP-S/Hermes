@@ -71,7 +71,7 @@ class Graphics {
       this.renderer.setClearColor(0xffffff);
       this.renderer.antialias = true;
       this.renderer.autoClear = false;
-      this.renderer.domElement.style.border = "solid";
+      this.renderer.domElement.style.border = "thin solid #0000FF";
       document.body.appendChild(this.renderer.domElement);
 
       // Resize Event Listener <-- ADD LATER
@@ -104,21 +104,70 @@ class Graphics {
       max: ((pixel_y + pixel_h) / size.h ) * 2 - 1,
     }
 
+    let world_w = (pixel_w / size.w) / 2;
+    let world_h = (pixel_h / size.h) / 2;
+
+    // Buffer Attempt
+    /*
     let points = [];
     points.push(world_x.min, world_y.min, 0);
     points.push(world_x.min, world_y.max, 0);
     points.push(world_x.max, world_y.max, 0);
     points.push(world_x.max, world_y.min, 0);
 
+    let points = [
+      0,      0,      0,
+      0.5,   0,      0,
+      0.5,   0.5,   0,
+    ];
+
+    let pointsDictionary = [
+      { x:0,    y:0,    z:0 },
+      { x:0.5, y:0,    z:0 },
+      { x:0.5, y:0.5, z:0 }
+    ];
+
     let vertices = new Float32Array( [
-      0,    0,    0,
-      0.5,  0,    0,
-      0.5,  0.5,  0,
-      0,    0.5,  0
+      0,      0,      0,
+      0.5,   0,      0,
+      0.5,   0.5,   0,
     ] );
 
-    let geometry = new THREE.BufferGeometry();
-    geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
+    let vertexDictionary = new Float32Array([
+      { x:0,    y:0,    z:0 },
+      { x:0.5, y:0,    z:0 },
+      { x:0.5, y:0.5, z:0 }
+    ]);
+
+    let geometryBuffer = new THREE.BufferGeometry();
+    //geometryBuffer.setAttribute( 'position', new THREE.BufferAttribute( vertexPoints, 3 ) );
+    geometryBuffer.setFromPoints(pointsDictionary);
+    let geometry = geometryBuffer;
+    */
+
+    // Shape Attempt
+    /*
+    let points = [];
+    points.push( new THREE.Vector2( 0,    0 ) );
+    points.push( new THREE.Vector2( 0.5,  0 ) );
+    points.push( new THREE.Vector2( 0.5,  0.5 ) );
+    points.push( new THREE.Vector2( 0,    0.5 ) );
+
+    //points.push( new THREE.Vector2( world_x.min, world_y.min ) );
+    //points.push( new THREE.Vector2( world_x.max, world_y.min ) );
+    //points.push( new THREE.Vector2( world_x.max, world_y.max ) );
+    //points.push( new THREE.Vector2( world_x.min, world_y.max ) );
+
+    //for ( var i = 0; i < points.length; i ++ ) points[ i ].multiplyScalar( 100 );
+
+    let shape = new THREE.Shape(points);
+    let geometry = new THREE.ShapeGeometry(shape);
+    */
+
+    // Box Attempt
+    let geometry = new THREE.BoxGeometry(pixel_w / size.w, pixel_h / size.h, 0.01);
+    let t = new THREE.Vector2( world_x.min + world_w / 2, world_y.min + world_h / 2 );
+    geometry.translate(t.x, t.y, 0);
     let material = new THREE.MeshBasicMaterial( { color : colour } )
     let mesh = new THREE.Mesh(geometry, material);
     let scene = new THREE.Scene();

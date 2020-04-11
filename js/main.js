@@ -53,7 +53,7 @@ function main() {
   // player.physics()
   // other pyshics Processing
   // Any other Processing
-  graphics.renderer.clear();
+  //graphics.renderer.clear();
   graphics.drawRectangle(0, 0, 100, 100, COLOURS.GREY);
 
 }
