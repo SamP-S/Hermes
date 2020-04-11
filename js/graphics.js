@@ -104,8 +104,8 @@ class Graphics {
       max: ((pixel_y + pixel_h) / size.h ) * 2 - 1,
     }
 
-    let world_w = (pixel_w / size.w) / 2;
-    let world_h = (pixel_h / size.h) / 2;
+    let world_w = (pixel_w / size.w) * 2;
+    let world_h = (pixel_h / size.h) * 2;
 
     // Buffer Attempt
     /*
@@ -165,7 +165,7 @@ class Graphics {
     */
 
     // Box Attempt
-    let geometry = new THREE.BoxGeometry(pixel_w / size.w, pixel_h / size.h, 0.01);
+    let geometry = new THREE.BoxGeometry(world_w, world_h, 0.01);
     let t = new THREE.Vector2( world_x.min + world_w / 2, world_y.min + world_h / 2 );
     geometry.translate(t.x, t.y, 0);
     let material = new THREE.MeshBasicMaterial( { color : colour } )
