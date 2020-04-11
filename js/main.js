@@ -10,9 +10,7 @@ function player_movement() {
 
   if (keyboard.GetKeyState('A')) {
     player.deltas[0] -= 0.5;
-  } /* else if (player.deltas[0] < 0 ) {
-    player.deltas[0] += 1;
-  } */
+  }
 
   if (keyboard.GetKeyState('W') && !player.jumping[0]) {
     player.deltas[1] += 20;
@@ -21,9 +19,7 @@ function player_movement() {
 
   if (keyboard.GetKeyState('D')) {
     player.deltas[0] += 0.5;
-  } /* else if (player.deltas[0] > 0 ) {
-    player.deltas[0] -= 1;
-  } */
+  }
 
 }
 
@@ -50,7 +46,6 @@ function main() {
   //requestAnimationFrame(animate);
   // player_movement()
   // other object movement Processing
-  // player.physics()
   // other pyshics Processing
   // Any other Processing
 
