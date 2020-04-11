@@ -53,24 +53,4 @@ class Player {
     });
   }
 
-// only deals with rectangular objects -- implement SAT if need to deal with more complex shapes
-  collided(object){
-    if (this.pos.x < object.pos.x + object.dimensions.width &&
-        this.pos.x + this.dimensions.width > object.pos.x &&
-        this.pos.y < object.pos.y + object.dimensions.height &&
-        this.pos.y + this.dimensions.height > object.y) {
-          return true;
-    } else{
-      return false;
-    }
-  }
-
-  check_enemies(enemies){
-    enemies.forEach((item, i) => {
-      if collided(item){
-        this.lives -= 1;
-      }
-    });
-  }
-
 };
