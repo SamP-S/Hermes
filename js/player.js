@@ -27,10 +27,20 @@ class Player {
 
   }
 
-  move() {
-    this.physics()
+// move routine. Requires array of all other objects.
+  move(floor, all_objects) {
+
+    this.physics(floor)
     this.pos.x += this.deltas.dx;
+    if (!legal_move(all_objects)){
+      this.pos.x -= this.deltas.dx;
+      this.deltas.dx; = 0
+    }
     this.pos.y += this.deltas.dy;
+    if (!legal_move(all_objects)){
+      this.pos.y -= this.deltas.dy;
+      this.deltas.dy; = 0
+    }
   }
 
 // only deals with rectangular objects -- implement SAT if need to deal with more complex shapes
@@ -41,14 +51,32 @@ class Player {
         this.pos.y + this.dimensions.height > object.y) {
           return true;
     } else{
-      return false;
-    }
+        return false;
+      }
   }
 
+// checks no collision occurs as result of move
+  legal_move(objects){
+    objects.forEach((item, i) => {
+      if (collided(item)){
+        return false
+      }
+    });
+    return true
+  }
+
+// MAKE IT FLASH RED
+  flash(){
+
+  }
+
+// checks if have collided with enemy and docks a life if has
   check_enemies(enemies){
     enemies.forEach((item, i) => {
       if (collided(item)){
         this.lives -= 1;
+        this.flash();
+        item.kill();
       }
     });
   }
