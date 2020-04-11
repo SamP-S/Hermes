@@ -10,14 +10,10 @@ class Player {
     this.states = {health: {time: 0, timeLim: 10^10, state: "vibin"}, dbljump: false};
   }
 
-  render() {
-    console.log("x: ", this.pos.x, " y: ". this.pos.y);
-  }
-
   physics(floor) {
     this.deltas.dx *= 0.9; // friction
 
-    if (player.pos.y > floor) {
+    if (player.pos.y + player.dimensions.height > floor) {
       this.deltas.dy -= 1.5; // gravity
     } else {
       this.deltas.dy = 0; // can't go thru floor lmfao
@@ -64,7 +60,7 @@ class Player {
   }
 
 // change health state to hit for 2000 ms
-  hit(){
+  hit() {
     this.states.health.time    = 0;
     this.states.health.timeLim = 2000;
     this.states.health.state   = "hurtin";
@@ -86,6 +82,11 @@ class Player {
       }
     });
 
+  }
+
+  // draw routine
+  render(graphics) {
+    graphics.drawRectangle(this.x, this.y, this.dimensions.width, this.dimensions.height);
   }
 
 };
