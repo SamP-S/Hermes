@@ -6,10 +6,10 @@ class Player {
     this.mass = 80;
     this.dimensions = {width: 20, height: 20};
     this.jumping = [false, false];
-    this.dbljump = false;
     this.deltas = { dx: 0, dy: 0};
     this.colour = colours.MAGENTA;
-    this.lives = 3
+    this.lives = 3;
+    this.states = {health: {time: 0, timeLim: 10^10, state: "vibin"}, dbljump: false};
   }
 
   render() {
@@ -65,20 +65,29 @@ class Player {
     return true
   }
 
-// MAKE IT FLASH RED
-  flash(){
+// change health state to hit for 2000 ms
+  hit(){
+    this.states.health.time    = 0;
+    this.states.health.timeLim = 2000;
+    this.states.health.state   = "hurtin";
 
   }
 
 // checks if have collided with enemy and docks a life if has
   check_enemies(enemies){
+    var health_state = this.states.health.state
+    if (health_state == "hurtin" || health_state == "invincible") {
+      return
+    }
+
     enemies.forEach((item, i) => {
       if (collided(item)){
         this.lives -= 1;
-        this.flash();
+        this.hit();
         item.kill();
       }
     });
+    
   }
 
 };
