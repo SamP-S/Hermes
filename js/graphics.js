@@ -89,24 +89,22 @@ class Graphics {
   // Draws Filled rectangle using pixel co-ordinates
   // enter colour as hex -> 0x------
   drawRectangle(pixel_x, pixel_y, pixel_w, pixel_h, colour) {
+    // No validation on input so no negative widths and shit alwite
+
+    // Size dictionary for the canvas Size
     let size = {
       w: this.renderer.domElement.width ,
       h: this.renderer.domElement.height
     };
 
-    let world_x = {
-      min: (pixel_x / size.w) * 2 - 1,
-      max: ((pixel_x + pixel_w) / size.w ) * 2 - 1,
-    }
-
-    let world_y = {
-      min: (pixel_y / size.h) * 2 - 1,
-      max: ((pixel_y + pixel_h) / size.h ) * 2 - 1,
-    }
-
+    // GL Space coordinates from the screen ("pixel") coordinates
+    let world_x = (pixel_x / size.w) * 2 - 1;
+    let world_y = (pixel_y / size.h) * 2 - 1;
     let world_w = (pixel_w / size.w) * 2;
     let world_h = (pixel_h / size.h) * 2;
 
+
+    /// --- IGNORE DEPRECATED --- ///
     // Buffer Attempt
     /*
     let points = [];
@@ -164,17 +162,30 @@ class Graphics {
     let geometry = new THREE.ShapeGeometry(shape);
     */
 
+    /// --- NORMAL --- ///
+
     // Box Attempt
+    // Generate box geometry
     let geometry = new THREE.BoxGeometry(world_w, world_h, 0.01);
+
+    // Translates from centre (0, 0)
     let t = new THREE.Vector2( world_x.min + world_w / 2, world_y.min + world_h / 2 );
     geometry.translate(t.x, t.y, 0);
+
+    // Basic Matrial of Solid Colour
     let material = new THREE.MeshBasicMaterial( { color : colour } )
+
+    // Combine geometry and material
     let mesh = new THREE.Mesh(geometry, material);
+    // Make scene
     let scene = new THREE.Scene();
     scene.add(mesh);
+
+    // Draw Call
     this.render(scene);
   }
 
+  // Simplified Draw call by passing an objects scene
   render(scene) {
     this.renderer.render(scene, this.camera);
   }
