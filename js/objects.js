@@ -1,5 +1,3 @@
-var colours = new Colours();
-
 class Base_Object {
   constructor(dimensions=[10,10], start_pos=[0,0], colour=colours.GREY, type="void_object") {
       this.pos = {x: start_pos[0], y:start_pos[0]}; // Top left corner of shape (if rect), otherwise centre.
@@ -11,8 +9,8 @@ class Base_Object {
       console.log("creating new object type: " + type)
   }
 
-  draw() {
-    console.log("Error, base object class cannot be drawn.");
+  render() {
+    console.log("Error, base object class cannot be rendern.");
   }
 
   physics() {
@@ -38,8 +36,8 @@ class Enemy extends Base_Object {
     super(dimensions, start_pos, colour, type)
   }
 
-  draw(){
-    console.log("Still can't be drawn but will be soon")
+  render(){
+    console.log("Still can't be rendern but will be soon")
   }
 
 };

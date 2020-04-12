@@ -1,4 +1,5 @@
-var colours = new Colours();
+var g = new Graphics();
+
 
 class Player {
   constructor() {
@@ -14,6 +15,7 @@ class Player {
 
   render() {
     console.log("x: ", this.pos.x, " y: ". this.pos.y);
+
   }
 
   physics(floor) {
