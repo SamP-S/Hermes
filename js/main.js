@@ -27,7 +27,7 @@ function player_movement() {
 
 
 // WebGL compatibility check
-if (!graphics.renderer) {
+if (!g.renderer) {
   let p = document.createElement("P");
 	p.innerHTML = "ERROR: WebGL is NOT supported";
 	document.body.appendChild(p);
@@ -41,7 +41,7 @@ if (!graphics.renderer) {
 }
 
 let lava = new Lava();
-lava.draw();
+lava.render();
 
 function main() {
 
@@ -51,8 +51,8 @@ function main() {
   // other object movement Processing
   // other pyshics Processing
   // Any other Processing
-  //graphics.renderer.clear();
-  g.drawRectangle(100, 100, graphics.renderer.domElement.width - 100, graphics.renderer.domElement.height - 100, COLOURS.GREEN);
+  //g.renderer.clear();
+  g.drawRectangle(100, 100, g.renderer.domElement.width - 100, g.renderer.domElement.height - 100, COLOURS.GREEN);
   g.drawRectangle(0, 0, 100, 100, COLOURS.GREY);
 
 }

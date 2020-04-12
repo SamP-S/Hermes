@@ -1,6 +1,5 @@
 var g = new Graphics();
 
-
 class Player {
   constructor() {
     this.pos = { x: -1, y: -1 };
@@ -8,7 +7,7 @@ class Player {
     this.dimensions = {width: 20, height: 20};
     this.jumping = [false, false];
     this.deltas = { dx: 0, dy: 0};
-    this.colour = colours.MAGENTA;
+    this.colour = COLOURS.MAGENTA;
     this.lives = 3;
     this.states = {health: {time: 0, timeLim: 10^10, state: "vibin"}, dbljump: false};
   }
