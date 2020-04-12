@@ -16,7 +16,7 @@ const COLOURS = {
   CYAN    : 0x00ffff,
   MAGENTA : 0xff00ff,
   GREY    : 0xAAAAAA,
-  LAVA    : 0x455063
+  LAVA    : 0xde8f18;
 }
 
 
