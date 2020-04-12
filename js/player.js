@@ -1,5 +1,3 @@
-var g = new Graphics();
-
 class Player {
   constructor() {
     this.pos = { x: -1, y: -1 };
