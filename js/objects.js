@@ -3,9 +3,7 @@ class Base_Object {
       this.pos = {x: start_pos[0], y:start_pos[0]}; // Top left corner of shape (if rect), otherwise centre.
       this.deltas = { dx: 0, dy: 0};
       this.dimensions = {width: dimensions[0], height: dimensions[1]};
-      this.fixed_y = true;
-      this.colour = COLOURS.LGREY;  // Set base colour light grey cause nice
-      this.type=type
+      this.type=type;
       console.log("creating new object type: " + type)
   }
 
@@ -25,25 +23,26 @@ class Base_Object {
 
   kill() {
     // graphically kill object
-    console.log("rufus gettin deaded:)")
-    delete this
+    console.log("rufus gettin deaded:)");
+    delete this;
   }
 
 };
 
 class Enemy extends Base_Object {
   constructor(dimensions, start_pos, colour = COLOURS.RED, type="enemy_base"){
-    super(dimensions, start_pos, colour, type)
+    super(dimensions, start_pos, type);
+    this.colour = colour;
   }
 
   render(){
-    console.log("Still can't be rendern but will be soon")
+    console.log("Still can't be rendern but will be soon");
   }
 
 };
 
 class Lava extends Enemy {
   constructor(){
-    super([40, 20], [200, 380], COLOURS.LAVA, "enemy_lava")
+    super([40, 20], [200, 380], COLOURS.LAVA, "enemy_lava");
   }
 }
