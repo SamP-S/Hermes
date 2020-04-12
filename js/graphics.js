@@ -1,6 +1,7 @@
 // Camera Constants
 const ORTH = 1;
 var ASPECT = window.innerWidth/window.innerHeight;
+const ASPECT_RATIO = { w : 16, h : 9 };
 
 // Colours
 const COLOURS = {
@@ -48,6 +49,13 @@ const GEOMETRY = {
   TORUSKNOT   : new THREE.TorusKnotGeometry()
 }
 
+function screen_to_world(coordinates, graphics) {
+  return {
+    x: (coordinates.x / graphics.renderer.domElement.width) * 2 - 1,
+    y: (coordinates.y / graphics.renderer.domElement.height) * 2 - 1
+  };
+}
+
 class Test_Object {
   constructor() {
     this.scene = new THREE.Scene();
@@ -71,12 +79,17 @@ class Graphics {
       this.renderer = new THREE.WebGLRenderer();
 
       // Renderer Properties
-      this.renderer.setSize(window.innerWidth, window.innerHeight);
+      if (window.innerWidth / ASPECT_RATIO.w < window.innerHeight / ASPECT_RATIO.h) {
+        this.renderer.setSize(window.innerWidth, (window.innerWidth / 16) * 9);
+      } else {
+        this.renderer.setSize((window.innerHeight / 9) * 16, window.innerHeight);
+      }
+
       this.renderer.setClearColor(0xffffff);
       this.renderer.antialias = true;
       this.renderer.autoClear = false;
       this.renderer.domElement.style.border = "thin solid #0000FF";
-      document.body.appendChild(this.renderer.domElement);
+      document.getElementById("canvas").appendChild(this.renderer.domElement);
 
       // Resize Event Listener <-- ADD LATER
       //window.addEventListener("resize", this.windowResize);

@@ -6,7 +6,7 @@ var player = new Player();
 var gameNotOver = true;
 var g = new Graphics();
 var test = new Test_Object();
-var floor = 20;
+var timer = new Timer();
 
 function player_movement() {
 
@@ -40,11 +40,15 @@ if (!g.renderer) {
   main();
 }
 
-let lava = new Lava();
-lava.render();
+var deltaTime = 0.00;
+timer.start();
 
 function main() {
+  // gets time since start of last frame
+  deltaTime = timer.getTime();
+  timer.reset();
 
+  // asks for new frame for rendering
   requestAnimationFrame(main);
 
   // player_movement()
@@ -52,7 +56,12 @@ function main() {
   // other pyshics Processing
   // Any other Processing
   //g.renderer.clear();
-  g.drawRectangle(100, 100, g.renderer.domElement.width - 100, g.renderer.domElement.height - 100, COLOURS.GREEN);
-  g.drawRectangle(0, 0, 100, 100, COLOURS.GREY);
+
+  // player draw call
+  player.render(g);
+
+  // test draw
+  //g.drawRectangle(100, 100, g.renderer.domElement.width - 100, g.renderer.domElement.height - 100, COLOURS.GREEN);
+  //g.drawRectangle(0, 0, 100, 100, COLOURS.GREY);
 
 }
