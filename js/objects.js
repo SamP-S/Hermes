@@ -1,5 +1,3 @@
-var colours = new Colours();
-
 class object {
   constructor() {
       this.pos = {x: 0, y:0}; // Top left corner of shape (if rect), otherwise centre.
