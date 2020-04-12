@@ -1,8 +1,8 @@
 class Base_Object {
-  constructor(dimensions=[10,10], start_pos=[0,0], colour=colours.GREY, type="void_object") {
-      this.pos = {x: start_pos[0], y:start_pos[0]}; // Top left corner of shape (if rect), otherwise centre.
+  constructor(dimensions=[0,0], start_pos=[0,0], type="void") {
+      this.pos = {x: start_pos[0], y:start_pos[1]}; // Top left corner of shape (if rect), otherwise centre.
       this.deltas = { dx: 0, dy: 0};
-      this.dimensions = {width: dimensions[0], height: dimensions[1]};
+      this.dimensions = {w: dimensions[0], h: dimensions[1]};
       this.type=type;
       console.log("creating new object type: " + type)
   }
@@ -11,12 +11,7 @@ class Base_Object {
     console.log("Error, base object class cannot be rendered.");
   }
 
-  physics() {
-    console.log("Error, base object class doesn't have physics");
-  }
-
   move() {
-    this.physics()
     this.pos.x += this.deltas.dx;
     this.pos.y += this.deltas.dy;
   }
@@ -29,7 +24,7 @@ class Base_Object {
 
 };
 
-class Enemy extends Base_Object {
+class Base_Sprite extends Base_Object {
   constructor(dimensions, start_pos, colour = COLOURS.RED, type="enemy_base"){
     super(dimensions, start_pos, type);
     this.colour = colour;
@@ -41,8 +36,9 @@ class Enemy extends Base_Object {
 
 };
 
-class Lava extends Enemy {
+class Base_Static extends Base_Object {
   constructor(){
-    super([40, 20], [200, 380], COLOURS.LAVA, "enemy_lava");
+    // sort it out soom :)
+    super();
   }
 }
