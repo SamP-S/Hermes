@@ -10,13 +10,12 @@ const PROBABILITY = {
 }
 
 const TILE = {
-  FLOOR : 0,
-  FlOOR_CEILING : 1,
-  AIR : 2,
-  TRAP : 3,
-  TRAP_THIN : 4,
-  TRAP_FLOOR : 5,
-  TRAP_CEILING : 6
+  AIR : 0,
+  FLOOR : 1,
+  TRAP : 2,
+  TRAP_THIN : 3,
+  TRAP_FLOOR : 4,
+  TRAP_CEILING : 5
 }
 
 /*
@@ -43,16 +42,17 @@ First attempt will use random selection of tiles according to some game logic ru
 */
 
 // top left corner of tile is the ORIGIN
-class Tile {
+class Tile extends Base_Object {
 
-  // id is enumerated tile type; width & height in world space
-  constructor(id, width, height) {
+  // id is enumerated tile type; dimensions(width & height) in world space
+  constructor( id, dimensions ) {
+    super( dimensions, [0,0], COLOURS.LGREY, "tile_" + id.toString() );
     this.scene = new THREE.Scene();
     switch (id) {
       // check enumerated TILE types for coresponding type
       case 0:
-
       case 1:
+        let geometry = THREE.BoxGeometry( this.dimensions.width, this.dimensions.height, 0.01 )
       case 2:
       case 3:
       case 4:
