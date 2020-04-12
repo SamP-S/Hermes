@@ -3,9 +3,7 @@ class Base_Object {
       this.pos = {x: start_pos[0], y:start_pos[1]}; // Top left corner of shape (if rect), otherwise centre.
       this.deltas = { dx: 0, dy: 0};
       this.dimensions = {width: dimensions[0], height: dimensions[1]};
-      this.fixed_y = true;
-      this.colour = COLOURS.LGREY;  // Set base colour light grey cause nice
-      this.type=type
+      this.type=type;
       console.log("creating new object type: " + type)
   }
 
@@ -25,8 +23,8 @@ class Base_Object {
 
   kill() {
     // graphically kill object
-    console.log("rufus gettin deaded:)")
-    delete this
+    console.log("rufus gettin deaded:)");
+    delete this;
   }
 
 };
