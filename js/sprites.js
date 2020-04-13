@@ -21,6 +21,7 @@ class Player extends Base_Sprite {
     enemies.forEach((item, i) => {
       if (collided(item)){
         this.lives -= 1;
+        // bruh u need to check item.squished(this);
         this.hit();
         item.kill();
       }
@@ -57,5 +58,12 @@ class Ogre extends Base_Sprite {
       }
     }
   };
+
+  // only to be called if collision has been confirmed. 
+  squished(player) {
+      if (player.pos.y > this.pos.y && player.pos.y < this.pos.y + 5){
+        return true
+      }
+  }
 
 };
