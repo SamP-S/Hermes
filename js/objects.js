@@ -41,9 +41,9 @@ class Base_Sprite extends Base_Object {
     this.max_deltas = {max_x : max_deltas[0], max_y : max_deltas[1]};
   }
 
-  // draw routine
+  // draw routine. Must have graphics passed as parameter
   render(graphics) {
-    console.log("Drawing base sprite (issa rectangle)");
+    console.log("Drawing sprite (issa rectangle)");
     graphics.drawRectangle(this.x, this.y, this.dimensions.width, this.dimensions.height, this.colour);
   }
 
