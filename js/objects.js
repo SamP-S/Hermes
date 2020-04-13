@@ -1,6 +1,6 @@
 class Base_Object {
-  constructor(dimensions=[0,0], start_pos=[0,0], type="void") {
-      this.pos = {x: start_pos[0], y:start_pos[1]}; // Top left corner of shape (if rect), otherwise centre.
+  constructor(dimensions=[0,0], pos=[0,0], type="void") {
+      this.pos = {x: pos[0], y:pos[1]}; // Top left corner of shape (if rect), otherwise centre.
       this.deltas = { dx: 0, dy: 0};
       this.dimensions = {w: dimensions[0], h: dimensions[1]};
       this.type=type;
@@ -37,8 +37,17 @@ class Base_Sprite extends Base_Object {
 };
 
 class Base_Static extends Base_Object {
-  constructor(){
+  constructor(dimensions = [0,0], pos = [0, 0], type = "static", colour = COLOURS.LGREY) {
     // sort it out soom :)
-    super();
+    super(dimensions, pos, type);
+    this.material = new THREE.MeshBasicMaterial( { color: colour } );
+    this.geometry = screen_to_geometry(this.pos, this.dimensions);
+    this.mesh = new THREE.Mesh(this.geometry, this.material);
+    this.scene = new THREE.Scene();
+    this.scene.add(this.mesh);
+  }
+
+  render(graphics) {
+    graphics.render(this.scene);
   }
 }
