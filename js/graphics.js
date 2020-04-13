@@ -56,6 +56,13 @@ function screen_to_world(coordinates, graphics) {
   };
 }
 
+function world_to_screen(coordinates, graphics) {
+  return {
+    x: ((coordinates.x + 1) / 2) * graphics.renderer.domElement.width,
+    y: ((coordinates.y + 1) / 2) * graphics.renderer.domElement.height
+  };
+}
+
 class Test_Object {
   constructor() {
     this.scene = new THREE.Scene();
@@ -206,13 +213,4 @@ class Graphics {
   render(scene) {
     this.renderer.render(scene, this.camera);
   }
-}
-
-function getSquareGeometry() {
-  var points = [];
-  points.push(new THREE.Vector3(0, 0, 0));
-  points.push(new THREE.Vector3(0, 1, 0));
-  points.push(new THREE.Vector3(1, 1, 0));
-  points.push(new THREE.Vector3(1, 0, 0));
-  var geometry = new THREE.BufferGeometry().setFromPoints(points);
 }
