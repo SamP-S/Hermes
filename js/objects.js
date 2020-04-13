@@ -44,7 +44,7 @@ class Base_Sprite extends Base_Object {
   // draw routine. Must have graphics passed as parameter
   render(graphics) {
     console.log("Drawing sprite (issa rectangle)");
-    graphics.drawRectangle(this.x, this.y, this.dimensions.width, this.dimensions.height, this.colour);
+    graphics.drawRectangle(this.pos.x, this.pos.y, this.dimensions.w, this.dimensions.h, this.colour);
   }
 
   physics(){
