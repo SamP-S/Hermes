@@ -57,6 +57,9 @@ class Base_Sprite extends Base_Object {
   move() {
     // sprites can't move into walls so legal move check needed
     this.physics(legal_move)
+    if (this.deltas.dx > this.max_deltas.max_x) this.deltas.dx = this.max_deltas.max_x;
+    if (this.deltas.dy > this.max_deltas.max_y) this.deltas.dy = this.max_deltas.max_y;
+
     this.pos.x += this.deltas.dx;
     if (!legal_move(all_objects)){
       this.pos.x -= this.deltas.dx;
