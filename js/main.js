@@ -14,9 +14,9 @@ function player_movement() {
     player.deltas[0] -= 0.5;
   }
 
-  if (keyboard.GetKeyState('W') && !player.jumping[0]) {
+  if (keyboard.GetKeyState('W')) {
     player.deltas[1] += 20;
-    player.jumping[0] = true
+    // player.jumping[0] = true
   }
 
   if (keyboard.GetKeyState('D')) {
@@ -59,9 +59,8 @@ function main() {
 
   // player draw call
   player.render(g);
+  player_movement();
+  player.move();
 
-  // test draw
-  //g.drawRectangle(100, 100, g.renderer.domElement.width - 100, g.renderer.domElement.height - 100, COLOURS.GREEN);
-  //g.drawRectangle(0, 0, 100, 100, COLOURS.GREY);
 
 }
