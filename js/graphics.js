@@ -49,18 +49,37 @@ const GEOMETRY = {
   TORUSKNOT   : new THREE.TorusKnotGeometry()
 }
 
-function screen_to_world(coordinates, graphics) {
+function screen_to_world(pos, graphics) {
   return {
-    x: (coordinates.x / graphics.renderer.domElement.width) * 2 - 1,
-    y: (coordinates.y / graphics.renderer.domElement.height) * 2 - 1
+    x: (pos.x / graphics.renderer.domElement.width) * 2 - 1,
+    y: (pos.y / graphics.renderer.domElement.height) * 2 - 1
   };
 }
 
-function world_to_screen(coordinates, graphics) {
+function world_to_screen(pos, graphics) {
   return {
-    x: ((coordinates.x + 1) / 2) * graphics.renderer.domElement.width,
-    y: ((coordinates.y + 1) / 2) * graphics.renderer.domElement.height
+    x: ((pos.x + 1) / 2) * graphics.renderer.domElement.width,
+    y: ((pos.y + 1) / 2) * graphics.renderer.domElement.height
   };
+}
+
+function screen_to_geometry(pos, dimensions) {
+  // Size dictionary for the canvas Size
+  let size = {
+    w: g.renderer.domElement.width ,
+    h: g.renderer.domElement.height
+  };
+
+  // GL Space coordinates from the screen ("pixel") coordinates
+  let world_x = (pos.x / size.w) * 2 - 1;
+  let world_y = (pos.y / size.h) * 2 - 1;
+  let world_w = (dimensions.w / size.w) * 2;
+  let world_h = (dimensions.h / size.h) * 2;
+
+  let geometry = new THREE.BoxGeometry(world_w, world_h, 0.01);
+  let t = new THREE.Vector2( world_x + world_w / 2, world_y + world_h / 2 );
+  geometry.translate(t.x, t.y, 0);
+  return geometry;
 }
 
 class Test_Object {
@@ -193,7 +212,7 @@ class Graphics {
     let geometry = new THREE.BoxGeometry(world_w, world_h, 0.01);
 
     // Translates from centre (0, 0)
-    let t = new THREE.Vector2( world_x.min + world_w / 2, world_y.min + world_h / 2 );
+    let t = new THREE.Vector2( world_x + world_w / 2, world_y + world_h / 2 );
     geometry.translate(t.x, t.y, 0);
 
     // Basic Matrial of Solid Colour
