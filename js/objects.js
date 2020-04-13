@@ -30,7 +30,7 @@ class Base_Object {
 
 class Base_Sprite extends Base_Object {
   constructor(dimensions=[0,0], start_pos=[0,0], type="sprite_base", colour = COLOURS.RED,
-              lives=0, states={none: "none"}){
+              lives=0, states={none: "none"}, mass=100){
     super(dimensions, start_pos, type);
     this.colour = colour;
     this.mass = mass;
@@ -39,8 +39,10 @@ class Base_Sprite extends Base_Object {
     this.states = states;
   }
 
-  render(){
-    console.log("Still can't be rendered -it's a base sprite u melt");
+  // draw routine
+  render(graphics) {
+    console.log("Drawing base sprite (issa rectangle)")
+    graphics.drawRectangle(this.x, this.y, this.dimensions.width, this.dimensions.height, this.colour);
   }
 
   physics(){
@@ -81,11 +83,6 @@ class Base_Sprite extends Base_Object {
         }
       });
       return true
-    }
-
-    // draw routine
-    render(graphics) {
-      graphics.drawRectangle(this.x, this.y, this.dimensions.width, this.dimensions.height, this.colour);
     }
 
 };
