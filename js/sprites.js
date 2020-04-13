@@ -1,6 +1,6 @@
 class Player extends Base_Sprite {
-  constructor(dimensions=[10, 25], start_pos = [20, 400]){
-    super(dimensions, start_pos, "sprite_player", COLOURS.MAGENTA, 3,
+  constructor(dimensions=[5, 5], start_pos = [20, 20]){
+    super(dimensions, start_pos, "sprite_player", COLOURS.WHITE, 3,
          {health: {time: 0, timeLim: 10^10, state: "vibin"}, dbljump: false}, 80);
   }
 
@@ -52,14 +52,13 @@ class Ogre extends Base_Sprite {
     if (this.row == player.row) {
       if (this.pos.x < player.pos.x) {
         this.deltas.dx += 6;
-      else {
+      } else {
         this.deltas.dx -= 6;
-      }
       }
     }
   };
 
-  // only to be called if collision has been confirmed. 
+  // only to be called if collision has been confirmed.
   squished(player) {
       if (player.pos.y > this.pos.y && player.pos.y < this.pos.y + 5){
         return true

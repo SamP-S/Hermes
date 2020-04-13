@@ -8,7 +8,7 @@ class Base_Object {
       this.deltas = { dx: 0, dy: 0};
       this.dimensions = {w: dimensions[0], h: dimensions[1]};
       this.type=type;
-      console.log("creating new object type: " + type)
+      console.log("creating new object type: " + type);
   }
 
   render() {
@@ -38,12 +38,12 @@ class Base_Sprite extends Base_Object {
     this.lives = lives;
     this.states = states;
     this.row = row;
-    this.max_deltas = {max_x : max_deltas[0], max_y : max_deltas[1]}};
+    this.max_deltas = {max_x : max_deltas[0], max_y : max_deltas[1]};
   }
 
   // draw routine
   render(graphics) {
-    console.log("Drawing base sprite (issa rectangle)")
+    console.log("Drawing base sprite (issa rectangle)");
     graphics.drawRectangle(this.x, this.y, this.dimensions.width, this.dimensions.height, this.colour);
   }
 
@@ -54,14 +54,14 @@ class Base_Sprite extends Base_Object {
     this.deltas.dy = (this.mass * GRAVITY - AIR_RESIST) / this.mass;
   }
 
-  move() {
+  move(all_objects=[]) {
     // sprites can't move into walls so legal move check needed
-    this.physics(legal_move)
+    this.physics()
     if (this.deltas.dx > this.max_deltas.max_x) this.deltas.dx = this.max_deltas.max_x;
     if (this.deltas.dy > this.max_deltas.max_y) this.deltas.dy = this.max_deltas.max_y;
 
     this.pos.x += this.deltas.dx;
-    if (!legal_move(all_objects)){
+    if (!this.legal_move(all_objects)){
       this.pos.x -= this.deltas.dx;
       this.deltas.dx = 0;
     }
@@ -81,7 +81,7 @@ class Base_Sprite extends Base_Object {
     }
 
   // checks no collision occurs as result of move
-    legal_move(objects){
+    legal_move(objects=[]){
       objects.forEach((item, i) => {
         if (collided(item)){
           return false
