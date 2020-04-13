@@ -25,6 +25,10 @@ function player_movement() {
 
 }
 
+var deltaTime = 0.00;
+timer.start();
+
+var base_static = new Base_Static([0, 0], [100, 100] );
 
 // WebGL compatibility check
 if (!g.renderer) {
@@ -39,9 +43,6 @@ if (!g.renderer) {
   // Enter main loop
   main();
 }
-
-var deltaTime = 0.00;
-timer.start();
 
 function main() {
   // gets time since start of last frame
@@ -58,8 +59,8 @@ function main() {
   //g.renderer.clear();
 
   // player draw call
-  player.render(g);
-
+  //player.render(g);
+  base_static.render();
   // test draw
   //g.drawRectangle(100, 100, g.renderer.domElement.width - 100, g.renderer.domElement.height - 100, COLOURS.GREEN);
   //g.drawRectangle(0, 0, 100, 100, COLOURS.GREY);
