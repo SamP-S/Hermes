@@ -83,6 +83,11 @@ class Base_Sprite extends Base_Object {
       return true
     }
 
+    // draw routine
+    render(graphics) {
+      graphics.drawRectangle(this.x, this.y, this.dimensions.width, this.dimensions.height, this.colour);
+    }
+
 };
 
 class Base_Static extends Base_Object {
