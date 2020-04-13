@@ -1,7 +1,7 @@
 class Player extends Base_Sprite {
   constructor(dimensions=[10, 25], start_pos = [20, 400]){
     super(dimensions, start_pos, "sprite_player", COLOURS.MAGENTA, 3,
-         {health: {time: 0, timeLim: 10^10, state: "vibin"}, dbljump: false}, 80, 0);
+         {health: {time: 0, timeLim: 10^10, state: "vibin"}, dbljump: false}, 80);
   }
 
   hit() {
@@ -36,6 +36,7 @@ class Player extends Base_Sprite {
     } else {
       this.row = 2;
     }
+    super.move();
   }
 
 };
@@ -48,7 +49,12 @@ class Ogre extends Base_Sprite {
 
   move(player) {
     if (this.row == player.row) {
-      if
+      if (this.pos.x < player.pos.x) {
+        this.deltas.dx += 6;
+      else {
+        this.deltas.dx -= 6;
+      }
+      }
     }
   };
 
