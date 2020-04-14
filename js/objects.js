@@ -56,8 +56,8 @@ class Base_Sprite extends Base_Object {
   }
 
   check_max_speeds(){
-    if (this.deltas.dx > this.max_deltas.max_x) this.deltas.dx = this.max_deltas.max_x;
-    if (this.deltas.dy > this.max_deltas.max_y) this.deltas.dy = this.max_deltas.max_y;
+    if (this.deltas.dx    > this.max_deltas.max_x) this.deltas.dx = this.max_deltas.max_x;
+    if (this.deltas.dy    > this.max_deltas.max_y) this.deltas.dy = this.max_deltas.max_y;
     if (this.deltas.dx*-1 > this.max_deltas.max_x) this.deltas.dx = this.max_deltas.max_x*-1;
     if (this.deltas.dy*-1 > this.max_deltas.max_y) this.deltas.dy = this.max_deltas.max_y*-1;
   }
