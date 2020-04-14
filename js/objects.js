@@ -1,5 +1,5 @@
 var GRAVITY = 9.8;
-var AIR_RESIST = 200;
+var AIR_RESIST = 100;
 // deltas refer to movement PER SECOND and need to be multiplied by time delta.
 
 class Base_Object {
@@ -30,7 +30,7 @@ class Base_Object {
 
 class Base_Sprite extends Base_Object {
   constructor(dimensions=[0,0], start_pos=[0,0], type="sprite_base", colour = COLOURS.RED,
-              lives=0, states={none: "none"}, mass=100, row=0, max_deltas = [100, 100]){
+              lives=0, states={none: "none"}, mass=100, row=0, max_deltas = [300, 300]){
     super(dimensions, start_pos, type);
     this.colour = colour;
     this.mass = mass;
@@ -49,27 +49,34 @@ class Base_Sprite extends Base_Object {
 
   physics(){
     // f = mnu * m * g
-    this.deltas.dx *= (1.1 - (this.mass / 300)); // friction -- IMPORTANT must override if mass <= 30kg
+    this.deltas.dx *= (1 - (this.mass / 2000)); // friction
     // when player height is confirmed come back here and make it real-world ish
-    this.deltas.dy = (this.mass * GRAVITY - AIR_RESIST) / this.mass;
+    this.deltas.dy += (this.mass * GRAVITY - AIR_RESIST) / this.mass;
+    if (this.pos.y > 600 && this.deltas.dy > 0) this.deltas.dy = 0;
   }
 
-  move(all_objects=[]) {
+  check_max_speeds(){
+    if (this.deltas.dx > this.max_deltas.max_x) this.deltas.dx = this.max_deltas.max_x;
+    if (this.deltas.dy > this.max_deltas.max_y) this.deltas.dy = this.max_deltas.max_y;
+    if (this.deltas.dx*-1 > this.max_deltas.max_x) this.deltas.dx = this.max_deltas.max_x*-1;
+    if (this.deltas.dy*-1 > this.max_deltas.max_y) this.deltas.dy = this.max_deltas.max_y*-1;
+  }
+
+  move(time=0.01, all_objects=[]) {
     // sprites can't move into walls so legal move check needed
     this.physics()
 
     console.log("dx: " + this.deltas.dx);
-    if (this.deltas.dx > this.max_deltas.max_x) this.deltas.dx = this.max_deltas.max_x;
-    if (this.deltas.dy > this.max_deltas.max_y) this.deltas.dy = this.max_deltas.max_y;
+    this.check_max_speeds();
 
-    this.pos.x += this.deltas.dx;
+    this.pos.x += this.deltas.dx * time;
 
     if (!this.legal_move(all_objects)){
-      this.pos.x -= this.deltas.dx;
+      this.pos.x -= this.deltas.dx * time;
       this.deltas.dx = 0;
     }
 
-    this.pos.y += this.deltas.dy;
+    this.pos.y += this.deltas.dy * time;
   }
 
   // only deals with rectangular objects -- implement SAT if need to deal with more complex shapes
