@@ -11,16 +11,15 @@ var timer = new Timer();
 function player_movement() {
 
   if (keyboard.GetKeyState('A')) {
-    player.deltas[0] -= 0.5;
+    player.deltas.dx -= 80;
   }
 
   if (keyboard.GetKeyState('W')) {
-    player.deltas[1] += 20;
-    // player.jumping[0] = true
+    player.deltas.dy += 20;
   }
 
   if (keyboard.GetKeyState('D')) {
-    player.deltas[0] += 0.5;
+    player.deltas.dx += 80;
   }
 
 }
