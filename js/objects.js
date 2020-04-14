@@ -30,7 +30,7 @@ class Base_Object {
 
 class Base_Sprite extends Base_Object {
   constructor(dimensions=[0,0], start_pos=[0,0], type="sprite_base", colour = COLOURS.RED,
-              lives=0, states={none: "none"}, mass=100, row=0, max_deltas = [10, 10]){
+              lives=0, states={none: "none"}, mass=100, row=0, max_deltas = [100, 100]){
     super(dimensions, start_pos, type);
     this.colour = colour;
     this.mass = mass;
@@ -57,14 +57,18 @@ class Base_Sprite extends Base_Object {
   move(all_objects=[]) {
     // sprites can't move into walls so legal move check needed
     this.physics()
+
+    console.log("dx: " + this.deltas.dx);
     if (this.deltas.dx > this.max_deltas.max_x) this.deltas.dx = this.max_deltas.max_x;
     if (this.deltas.dy > this.max_deltas.max_y) this.deltas.dy = this.max_deltas.max_y;
 
     this.pos.x += this.deltas.dx;
+
     if (!this.legal_move(all_objects)){
       this.pos.x -= this.deltas.dx;
       this.deltas.dx = 0;
     }
+
     this.pos.y += this.deltas.dy;
   }
 
@@ -84,9 +88,11 @@ class Base_Sprite extends Base_Object {
     legal_move(objects=[]){
       objects.forEach((item, i) => {
         if (collided(item)){
+          console.log("legal move returns false");
           return false
         }
       });
+      console.log("legal move returns true");
       return true
     }
 
