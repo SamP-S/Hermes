@@ -1,7 +1,7 @@
 class Player extends Base_Sprite {
   constructor(dimensions=[5, 5], start_pos = [20, 20]){
     super(dimensions, start_pos, "sprite_player", COLOURS.WHITE, 3,
-         {health: {time: 0, timeLim: 10^10, state: "vibin"}, dbljump: false}, 80);
+         {health: {time: 0, timeLim: 10^10, state: "vibin"}, jumping: false, dbljump: false}, 80);
   }
 
   hit() {
@@ -9,6 +9,11 @@ class Player extends Base_Sprite {
     this.states.health.timeLim = 2000;
     this.states.health.state   = "hurtin";
 
+  }
+
+  physics() {
+    super.physics();
+    if (this.deltas.dy == 0) this.states.jumping = false;
   }
 
   // checks if have collided with enemy and docks a life if has
