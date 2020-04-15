@@ -45,6 +45,21 @@ if (!g.renderer) {
   main();
 }
 
+ function player_processing() {
+   player_movement();
+   /* player.move is currently paralysed -- need to speak to soom about objects and possibly write an object
+     parser function, to decide which to pass into player.move */
+   player.move(deltaTime, stage.tiles[0]);
+   document.getElementById('is-it-moving').innerHTML = `x : ${player.pos.x.toFixed(2)},      y : ${player.pos.y.toFixed(2)} \
+                                                        dx: ${player.deltas.dx.toFixed(2)}, dy : ${player.deltas.dy.toFixed(2)}`;
+ }
+
+ function render_objects() {
+   // TODO adapt this to iterate through list of objects
+   player.render(g);
+   stage.render(g);
+ }
+
 function main() {
   // gets time since start of last frame
   deltaTime = timer.getTime();
@@ -59,14 +74,7 @@ function main() {
   // Any other Processing
   //g.renderer.clear();
 
-  // player draw call
-  player.render(g);
-  player_movement();
-  player.move(deltaTime, stage.tiles[0]);
-  document.getElementById('is-it-moving').innerHTML = `x : ${player.pos.x.toFixed(2)},      y : ${player.pos.y.toFixed(2)} \
-                                                       dx: ${player.deltas.dx.toFixed(2)}, dy : ${player.deltas.dy.toFixed(2)}`;
-
-  stage.render(g);
-
+  player_processing();
+  render_objects();
 
 }
