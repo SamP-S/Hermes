@@ -45,30 +45,88 @@ First attempt will use random selection of tiles according to some game logic ru
 class Tile extends Base_Object {
 
   // id is enumerated tile type; dimensions(width & height) in world space
-  constructor( id, dimensions ) {
-    super( dimensions, [0,0], COLOURS.LGREY, "tile_" + id.toString() );
-    this.scene = new THREE.Scene();
+  constructor( dimensions, pos, id) {
+    super( dimensions, pos, "tile_" + id.toString() );
+    this.objects = [];
     switch (id) {
       // check enumerated TILE types for coresponding type
       case 0:
+        break;
       case 1:
-        let geometry = THREE.BoxGeometry( this.dimensions.width, this.dimensions.height, 0.01 )
+        this.objects.push(new Base_Static([this.dimensions.w, this.dimensions.h / 8], [0, 7 * this.dimensions.h / 8 ], "static_floor", COLOURS.LGREY, false));
+        break;
       case 2:
+        break;
       case 3:
+        this.objects.push(new Base_Static([this.dimensions.w, this.dimensions.h / 8], [0, 7 * this.dimensions.h / 8 ], "static_floor_trap", COLOURS.RED, true));
+        break;
       case 4:
+        break;
       case 5:
+        break;
       case 6:
+        break;
     }
   }
 
-  render(graphics) {
-    graphics.render(this.scene);
+  render(graphics, origin) {
+    for (let i = 0; i < this.objects.length; i++) {
+      this.objects[i].render(graphics, origin);
+    }
+  }
+
+  kill() {
+    delete this.objects;
+    this.objects = [];
   }
 }
 
 
-class Stage {
+class Stage extends Base_Object {
+  constructor(dimensions = [0,0], pos = [0, 0], type = "stage", cols = 6, rows = 3) {
+    super(dimensions, pos, type);
+
+    this.tiles = [];
+    let col = [];
+    let x = this.left;
+    let y = this.top;
+    let t;
+
+    let grid = [
+      [1, 1, 1],
+      [1, 1, 1],
+      [0, 0, 0],
+      [1, 1, 1],
+      [1, 0, 0],
+      [3, 3, 1]
+    ];
+
+    for (let i = 0; i < cols; i++) {
+      for (let j = 0; j < rows; j++) {
+        t = new Tile([this.dimensions.w / cols, this.dimensions.h / rows], [x, y], grid[i][j]);
+        col.push(t);
+        y += this.dimensions.h / rows;
+      }
+      this.tiles.push(col);
+      x += this.dimensions.w / cols;
+      y = 0;
+      col = [];
+    }
+  }
+
+  render(graphics) {
+    for (let i = 0; i < this.tiles.length; i++) {
+      let col = this.tiles[i];
+      for (let j = 0; j < col.length; j++) {
+        col[j].render(graphics, col[j].pos);
+      }
+    }
+  }
+}
+
+class Level extends Base_Object {
   constructor() {
+    super();
 
   }
 }
