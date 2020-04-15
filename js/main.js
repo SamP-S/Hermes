@@ -62,7 +62,7 @@ function main() {
   // player draw call
   player.render(g);
   player_movement();
-  player.move(deltaTime);
+  player.move(deltaTime, stage.tiles[0]);
   document.getElementById('is-it-moving').innerHTML = `x : ${player.pos.x.toFixed(2)},      y : ${player.pos.y.toFixed(2)} \
                                                        dx: ${player.deltas.dx.toFixed(2)}, dy : ${player.deltas.dy.toFixed(2)}`;
 
