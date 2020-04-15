@@ -106,9 +106,9 @@ class Graphics {
 
       // Renderer Properties
       if (window.innerWidth / ASPECT_RATIO.w < window.innerHeight / ASPECT_RATIO.h) {
-        this.renderer.setSize(window.innerWidth, (window.innerWidth / 16) * 9);
+        this.renderer.setSize(window.innerWidth * 0.8, (window.innerWidth * 0.8 / 16) * 9);
       } else {
-        this.renderer.setSize((window.innerHeight / 9) * 16, window.innerHeight);
+        this.renderer.setSize((window.innerHeight * 0.8 / 9) * 16, window.innerHeight * 0.8);
       }
 
       this.renderer.setClearColor(0xffffff);
