@@ -1,3 +1,5 @@
+//document.addEventListener('mousemove', function (event) { console.log("x:", event.x, "   y:", event.y); } );
+
 // Relevant Keys -> w,a,s,d,up,down,left,right,escape
 var KEY = {
   KEY_DOWN: true,

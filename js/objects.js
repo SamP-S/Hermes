@@ -3,12 +3,17 @@ var AIR_RESIST = 100;
 // deltas refer to movement PER SECOND and need to be multiplied by time delta.
 
 class Base_Object {
-  constructor(dimensions=[0,0], start_pos=[0,0], type="void") {
-      this.pos = {x: start_pos[0], y:start_pos[1]}; // Top left corner of shape (if rect), otherwise centre.
+  constructor(dimensions=[0,0], pos=[0,0], type="void") {
+      this.pos = {x: pos[0], y:pos[1]}; // Top left corner of shape (if rect), otherwise centre.
       this.deltas = { dx: 0, dy: 0};
       this.dimensions = {w: dimensions[0], h: dimensions[1]};
       this.type=type;
-      console.log("creating new object type: " + type);
+      console.log("creating new object type: " + type)
+
+      this.left = this.pos.x;                         // TODO refactor collision detection to use this
+      this.right = this.pos.x + this.dimensions.w;
+      this.top = this.pos.y;
+      this.bottom = this.pos.y + this.dimensions.h;
   }
 
   render() {
@@ -106,8 +111,19 @@ class Base_Sprite extends Base_Object {
 };
 
 class Base_Static extends Base_Object {
-  constructor(){
+  constructor(dimensions = [0,0], pos = [0, 0], type = "static", colour = COLOURS.LGREY, isTrap = false) {
     // sort it out soom :)
-    super();
+    super(dimensions, pos, type);
+    this.colour = colour;
+    this.isTrap = isTrap;
+    this.material = new THREE.MeshBasicMaterial( { color: colour } );
+    this.geometry = screen_to_geometry(this.pos, this.dimensions);
+    this.mesh = new THREE.Mesh(this.geometry, this.material);
+    this.scene = new THREE.Scene();
+    this.scene.add(this.mesh);
+  }
+
+  render(graphics, origin) {
+    graphics.drawRectangle(this.pos.x + origin.x, this.pos.y + origin.y, this.dimensions.w, this.dimensions.h, this.colour);
   }
 }

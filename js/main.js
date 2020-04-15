@@ -26,6 +26,10 @@ function player_movement() {
 
 }
 
+var deltaTime = 0.00;
+timer.start();
+
+var stage = new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [0, 0], "test_stage", 6, 3 );
 
 // WebGL compatibility check
 if (!g.renderer) {
@@ -40,9 +44,6 @@ if (!g.renderer) {
   // Enter main loop
   main();
 }
-
-var deltaTime = 0.00;
-timer.start();
 
 function main() {
   // gets time since start of last frame
@@ -64,6 +65,8 @@ function main() {
   player.move(deltaTime);
   document.getElementById('is-it-moving').innerHTML = `x : ${player.pos.x.toFixed(2)},      y : ${player.pos.y.toFixed(2)} \
                                                        dx: ${player.deltas.dx.toFixed(2)}, dy : ${player.deltas.dy.toFixed(2)}`;
+
+  stage.render(g);
 
 
 }
