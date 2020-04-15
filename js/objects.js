@@ -5,6 +5,11 @@ class Base_Object {
       this.dimensions = {w: dimensions[0], h: dimensions[1]};
       this.type=type;
       console.log("creating new object type: " + type)
+
+      this.left = this.pos.x;
+      this.right = this.pos.x + this.dimensions.w;
+      this.top = this.pos.y;
+      this.bottom = this.pos.y + this.dimensions.h;
   }
 
   render() {
@@ -37,9 +42,11 @@ class Base_Sprite extends Base_Object {
 };
 
 class Base_Static extends Base_Object {
-  constructor(dimensions = [0,0], pos = [0, 0], type = "static", colour = COLOURS.LGREY) {
+  constructor(dimensions = [0,0], pos = [0, 0], type = "static", colour = COLOURS.LGREY, isTrap = false) {
     // sort it out soom :)
     super(dimensions, pos, type);
+    this.colour = colour;
+    this.isTrap = isTrap;
     this.material = new THREE.MeshBasicMaterial( { color: colour } );
     this.geometry = screen_to_geometry(this.pos, this.dimensions);
     this.mesh = new THREE.Mesh(this.geometry, this.material);
@@ -47,7 +54,7 @@ class Base_Static extends Base_Object {
     this.scene.add(this.mesh);
   }
 
-  render(graphics) {
-    graphics.render(this.scene);
+  render(graphics, origin) {
+    graphics.drawRectangle(this.pos.x + origin.x, this.pos.y + origin.y, this.dimensions.w, this.dimensions.h, this.colour);
   }
 }
