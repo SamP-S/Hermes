@@ -28,7 +28,7 @@ function player_movement() {
 var deltaTime = 0.00;
 timer.start();
 
-var base_static = new Base_Static( [100, 100], [0, 0] );
+var stage = new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [0, 0], "test_stage", 6, 3 );
 
 // WebGL compatibility check
 if (!g.renderer) {
@@ -60,9 +60,10 @@ function main() {
 
   // player draw call
   //player.render(g);
-  base_static.render(g);
+  //tile.render(g);
+  stage.render(g);
   // test draw
-  g.drawRectangle(100, 100, g.renderer.domElement.width - 100, g.renderer.domElement.height - 100, COLOURS.GREEN);
-  g.drawRectangle(0, 0, 100, 100, COLOURS.GREY);
+  //g.drawRectangle(100, 100, g.renderer.domElement.width - 100, g.renderer.domElement.height - 100, COLOURS.GREEN);
+  //g.drawRectangle(0, 0, 100, 100, COLOURS.GREY);
 
 }
