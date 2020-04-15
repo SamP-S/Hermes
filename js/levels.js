@@ -87,11 +87,12 @@ class Stage extends Base_Object {
     super(dimensions, pos, type);
 
     this.tiles = [];
-    let col = [];
+    let col = [];   // what the fuck is 'col' 
     let x = this.left;
     let y = this.top;
     let t;
 
+    // how is this orientated ?? please comment in :)
     let grid = [
       [1, 1, 1],
       [1, 1, 1],
