@@ -55,9 +55,9 @@ class Base_Sprite extends Base_Object {
   physics(){
     // f = mnu * m * g
     this.deltas.dx *= (1 - (this.mass / 2000)); // friction
-    // when player height is confirmed come back here and make it real-world ish
+    // TODO when player height is confirmed come back here and make it real-world ish
     this.deltas.dy += (this.mass * GRAVITY - AIR_RESIST) / this.mass;
-    if (this.pos.y > 600 && this.deltas.dy > 0) this.deltas.dy = 0;
+    // if (this.pos.y > 200 && this.deltas.dy > 0) this.deltas.dy = 0; -- uncomment to enforce floor at given height
   }
 
   check_max_speeds(){
@@ -82,14 +82,20 @@ class Base_Sprite extends Base_Object {
     }
 
     this.pos.y += this.deltas.dy * time;
+
+    if (this.legal_move(all_objects) == false){
+      this.pos.y -= this.deltas.dy * time;
+      this.deltas.dy *= 0.6;
+    }
   }
 
   // only deals with rectangular objects -- implement SAT if need to deal with more complex shapes
+  // TODO fix this u shit mofo -- it's done jheez calm your tits someone's in a bad mood
     collided(object){
-      if (this.pos.x < object.pos.x + object.dimensions.width &&
-          this.pos.x + this.dimensions.width > object.pos.x &&
-          this.pos.y < object.pos.y + object.dimensions.height &&
-          this.pos.y + this.dimensions.height > object.y) {
+      if (this.pos.x < object.pos.x + object.dimensions.w &&
+          this.pos.x + this.dimensions.w > object.pos.x &&
+          this.pos.y < object.pos.y + object.dimensions.h &&
+          this.pos.y + this.dimensions.h > object.pos.y) {
             return true;
       } else{
           return false;
@@ -99,13 +105,13 @@ class Base_Sprite extends Base_Object {
   // checks no collision occurs as result of move
     legal_move(objects=[]){
       objects.forEach((item, i) => {
-        if (collided(item)){
+        if (this.collided(item)){
           console.log("legal move returns false");
-          return false
+          return false;
         }
       });
       console.log("legal move returns true");
-      return true
+      return true;
     }
 
 };
