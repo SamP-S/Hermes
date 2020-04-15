@@ -57,7 +57,7 @@ class Base_Sprite extends Base_Object {
     this.deltas.dx *= (1 - (this.mass / 2000)); // friction
     // TODO when player height is confirmed come back here and make it real-world ish
     this.deltas.dy += (this.mass * GRAVITY - AIR_RESIST) / this.mass;
-    // if (this.pos.y > 200 && this.deltas.dy > 0) this.deltas.dy = 0; -- uncomment to enforce floor at given height
+    if (this.pos.y > 300 && this.deltas.dy > 0) this.deltas.dy = 0;
   }
 
   check_max_speeds(){
@@ -85,12 +85,15 @@ class Base_Sprite extends Base_Object {
 
     if (this.legal_move(all_objects) == false){
       this.pos.y -= this.deltas.dy * time;
+      console.log("HGWHIDHEIoadhidchbadsdsbh")
       this.deltas.dy *= 0.6;
     }
   }
 
   // only deals with rectangular objects -- implement SAT if need to deal with more complex shapes
   // TODO fix this u shit mofo -- it's done jheez calm your tits someone's in a bad mood
+  // okay so it was less fixed than was initially believed
+  // is fixed now though:)
     collided(object){
       if (this.pos.x < object.pos.x + object.dimensions.w &&
           this.pos.x + this.dimensions.w > object.pos.x &&
@@ -104,14 +107,15 @@ class Base_Sprite extends Base_Object {
 
   // checks no collision occurs as result of move
     legal_move(objects=[]){
+      let toReturn = true;
       objects.forEach((item, i) => {
         if (this.collided(item)){
           console.log("legal move returns false");
-          return false;
+          toReturn = false;
         }
       });
       console.log("legal move returns true");
-      return true;
+      return toReturn;
     }
 
 };
