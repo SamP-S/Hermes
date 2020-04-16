@@ -56,26 +56,35 @@ class Keyboard {
       // wasd
       case 87: // W
         return this.data[0];
+        break;
       case 65: // A
         return this.data[1];
+        break;
       case 83: // S
         return this.data[2];
+          break;
       case 68: // D
         return this.data[3];
+        break;
 
       // Arrow Keys
       case 38: // Up Arrow
         return this.data[0];
+        break;
       case 37: // Left Arrow
         return this.data[1];
+        break;
       case 40: // Down Arrow
         return this.data[2];
+        break;
       case 39: // Right Arrow
         return this.data[3];
+        break;
 
       // Escape
       case 27: // Escape
         return this.data[4];
+        break;
       }
   }
 

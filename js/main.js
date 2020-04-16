@@ -11,16 +11,17 @@ var timer = new Timer();
 function player_movement() {
 
   if (keyboard.GetKeyState('A')) {
-    player.deltas[0] -= 0.5;
+    player.deltas.dx -= 80;
   }
 
-  if (keyboard.GetKeyState('W') && !player.jumping[0]) {
-    player.deltas[1] += 20;
-    player.jumping[0] = true
+  if (keyboard.GetKeyState('W') && !player.states.jumping) {
+    player.deltas.dy -= 500;
+    player.states.jumping = true;
+
   }
 
   if (keyboard.GetKeyState('D')) {
-    player.deltas[0] += 0.5;
+    player.deltas.dx += 80;
   }
 
 }
@@ -44,6 +45,21 @@ if (!g.renderer) {
   main();
 }
 
+ function player_processing() {
+   player_movement();
+   /* player.move is currently paralysed -- need to speak to soom about objects and possibly write an object
+     parser function, to decide which to pass into player.move */
+   player.move(deltaTime, stage.tiles[0]);
+   document.getElementById('is-it-moving').innerHTML = `x : ${player.pos.x.toFixed(2)},      y : ${player.pos.y.toFixed(2)} \
+                                                        dx: ${player.deltas.dx.toFixed(2)}, dy : ${player.deltas.dy.toFixed(2)}`;
+ }
+
+ function render_objects() {
+   // TODO adapt this to iterate through list of objects
+   player.render(g);
+   stage.render(g);
+ }
+
 function main() {
   // gets time since start of last frame
   deltaTime = timer.getTime();
@@ -58,12 +74,7 @@ function main() {
   // Any other Processing
   //g.renderer.clear();
 
-  // player draw call
-  //player.render(g);
-  //tile.render(g);
-  stage.render(g);
-  // test draw
-  //g.drawRectangle(100, 100, g.renderer.domElement.width - 100, g.renderer.domElement.height - 100, COLOURS.GREEN);
-  //g.drawRectangle(0, 0, 100, 100, COLOURS.GREY);
+  player_processing();
+  render_objects();
 
 }
