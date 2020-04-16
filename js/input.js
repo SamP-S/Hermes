@@ -18,26 +18,35 @@ class Keyboard {
       // wasd
       case 87: // W
         this.data[0] = state;
+        break;
       case 65: // A
         this.data[1] = state;
+        break;
       case 83: // S
         this.data[2] = state;
+        break;
       case 68: // D
         this.data[3] = state;
+        break;
 
       // Arrow Keys
       case 38: // Up Arrow
         this.data[0] = state;
+        break;
       case 37: // Left Arrow
         this.data[1] = state;
+        break;
       case 40: // Down Arrow
         this.data[2] = state;
+        break;
       case 39: // Right Arrow
         this.data[3] = state;
+        break;
 
       // Escape
       case 27: // Escape
         this.data[4] = state;
+        break;
     }
   }
 
