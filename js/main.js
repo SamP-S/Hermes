@@ -67,9 +67,7 @@ function main() {
   // Moved the player properties display cause i wanted it but not the movement
   document.getElementById('is-it-moving').innerHTML = `x : ${player.pos.x.toFixed(2)}, y : ${player.pos.y.toFixed(2)} \ dx: ${player.deltas.dx.toFixed(2)}, dy : ${player.deltas.dy.toFixed(2)}`;
 
-  let test_timer = new Timer();
   let t = level.getTiles(player.getLeft(), player.getRight(), player.getTop(), player.getBottom());
-  alert(test_timer.getTime());
 
   // asks for new frame for rendering
   requestAnimationFrame(main);

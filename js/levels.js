@@ -171,37 +171,41 @@ class Level extends Base_Object {
       // Check which stage(s) left and right are in
       if (left > l && left < r && right > l && right < r) {
         s.push(this.stages[i]);
-        return;
+        break;
       } else if (left > l && left) {
         s.push(this.stages[i]);
         continue;
       } else if (right > l && right < r) {
         s.push(this.stages[i]);
-        return;
+        break;
       }
     }
     return s;
   }
 
   getTiles(left, right, up, down) {
-    let s = getStages(left, right, up, down);
-    let t, cols, rows = [];
-    let l, r, u, d, stage, n_cols, n_rows;
-    for (stage in s) {
+    let s = this.getStages(left, right, up, down);
+    let rows = [];
+    let cols = [];
+    let t = [];
+    let l, r, u, d, n_cols, n_rows, stage;
+    for (let iter = 0; iter < s.length; iter++) {
+      stage = s[iter];
+
       // Check tile layout
       if (stage.cols == 0 || stage.rows == 0) { continue; }
 
       // Adjust coordinate space
       l = left - stage.getLeft();
-      r = right - stage.getRight();
-      u = up - stage.getUp();
-      d = down - stage.getDown();
+      r = right - stage.getLeft();
+      u = up - stage.getTop();
+      d = down - stage.getTop();
 
       // Use integer division to check row/col
-      let l_col = l / (stage.dimensions.w / stage.cols);
-      let r_col = r / (stage.dimensions.w / stage.cols);
-      let u_row = u / (stage.dimensions.h / stage.rows);
-      let d_row = d / (stage.dimensions.h / stage.rows);
+      let l_col = Math.floor(l / (stage.dimensions.w / stage.cols));
+      let r_col = Math.floor(r / (stage.dimensions.w / stage.cols));
+      let u_row = Math.floor(u / (stage.dimensions.h / stage.rows));
+      let d_row = Math.floor(d / (stage.dimensions.h / stage.rows));
 
       // row indexes for defined area of stage
       if (u_row >= stage.rows || d_row >= stage.rows) {
