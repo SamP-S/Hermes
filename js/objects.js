@@ -8,18 +8,18 @@ class Base_Object {
       this.deltas = { dx: 0, dy: 0};
       this.dimensions = {w: dimensions[0], h: dimensions[1]};
       this.type=type;
-      console.log("creating new object type: " + type)
-
-      // TODO refactor collision detection to use this
-      getLeft() { return this.pos.x; }
-      setLeft(l) { this.pos.x = l; }
-      getRight() { return this.pos.x + this.dimensions.w; }
-      setRight(r) { this.pos.x = r - this.dimensions.w; }
-      getTop() { return this.pos.y; }
-      setTop(t) { this.pos.y = t; }
-      getBottom() { return this.pos.y + this.dimensions.h; }
-      setBottom(b) { this.pos.y = b - this.dimensions.h; }
+      console.log("creating new object type: " + type);
   }
+
+  // TODO refactor collision detection to use this
+  getLeft() { return this.pos.x; }
+  setLeft(l) { this.pos.x = l; }
+  getRight() { return this.pos.x + this.dimensions.w; }
+  setRight(r) { this.pos.x = r - this.dimensions.w; }
+  getTop() { return this.pos.y; }
+  setTop(t) { this.pos.y = t; }
+  getBottom() { return this.pos.y + this.dimensions.h; }
+  setBottom(b) { this.pos.y = b - this.dimensions.h; }
 
   render() {
     console.log("Error, base object class cannot be rendered.");
