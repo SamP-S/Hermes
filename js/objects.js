@@ -10,10 +10,15 @@ class Base_Object {
       this.type=type;
       console.log("creating new object type: " + type)
 
-      this.left = this.pos.x;                         // TODO refactor collision detection to use this
-      this.right = this.pos.x + this.dimensions.w;
-      this.top = this.pos.y;
-      this.bottom = this.pos.y + this.dimensions.h;
+      // TODO refactor collision detection to use this
+      getLeft() { return this.pos.x; }
+      setLeft(l) { this.pos.x = l; }
+      getRight() { return this.pos.x + this.dimensions.w; }
+      setRight(r) { this.pos.x = r - this.dimensions.w; }
+      getTop() { return this.pos.y; }
+      setTop(t) { this.pos.y = t; }
+      getBottom() { return this.pos.y + this.dimensions.h; }
+      setBottom(b) { this.pos.y = b - this.dimensions.h; }
   }
 
   render() {
