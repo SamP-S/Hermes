@@ -29,7 +29,8 @@ function player_movement() {
 var deltaTime = 0.00;
 timer.start();
 
-var stage = new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [0, 0], "test_stage", 6, 3 );
+//var stage = new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [0, 0], "test_stage", 6, 3 );
+var level = new Level( [g.renderer.domElement.width, g.renderer.domElement.height], [0, 0], "test_level" );
 
 // WebGL compatibility check
 if (!g.renderer) {
@@ -50,8 +51,6 @@ if (!g.renderer) {
    /* player.move is currently paralysed -- need to speak to soom about objects and possibly write an object
      parser function, to decide which to pass into player.move */
    player.move(deltaTime, stage.tiles[0]);
-   document.getElementById('is-it-moving').innerHTML = `x : ${player.pos.x.toFixed(2)},      y : ${player.pos.y.toFixed(2)} \
-                                                        dx: ${player.deltas.dx.toFixed(2)}, dy : ${player.deltas.dy.toFixed(2)}`;
  }
 
  function render_objects() {
@@ -65,6 +64,13 @@ function main() {
   deltaTime = timer.getTime();
   timer.reset();
 
+  // Moved the player properties display cause i wanted it but not the movement
+  document.getElementById('is-it-moving').innerHTML = `x : ${player.pos.x.toFixed(2)}, y : ${player.pos.y.toFixed(2)} \ dx: ${player.deltas.dx.toFixed(2)}, dy : ${player.deltas.dy.toFixed(2)}`;
+
+  let test_timer = new Timer();
+  let t = level.getTiles(player.getLeft(), player.getRight(), player.getTop(), player.getBottom());
+  alert(test_timer.getTime());
+
   // asks for new frame for rendering
   requestAnimationFrame(main);
 
@@ -73,8 +79,9 @@ function main() {
   // other pyshics Processing
   // Any other Processing
   //g.renderer.clear();
-
-  player_processing();
-  render_objects();
+  level.render(g);
+  //player_processing();
+  player.render(g);
+  //render_objects();
 
 }
