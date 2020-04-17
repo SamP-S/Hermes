@@ -8,8 +8,8 @@ const TILE = {
   AIR : 0,
   FLOOR : 1,
   TRAP : 2,
-  TRAP_THIN : 3,
-  TRAP_FLOOR : 4,
+  TRAP_FLOOR : 3,
+  TRAP_THIN : 4,
   TRAP_CEILING : 5
 }
 
@@ -52,16 +52,18 @@ class Tile extends Base_Object {
         break;
       case 2:
         this.objects.push(new Base_Static([this.dimensions.w, this.dimensions.h / 8], [0, 7 * this.dimensions.h / 8 ], "static_floor", COLOURS.LGREY, false));
-        this.objects.push(new Base_Static([this.dimensions.w / 2, this.dimensions.h / 8], [this.dimensions.w / 4, 3 * this.dimensions.h / 4 ], "static_floor", COLOURS.LGREY, true));
+        this.objects.push(new Base_Static([this.dimensions.w / 2, this.dimensions.h / 8], [this.dimensions.w / 4, 3 * this.dimensions.h / 4 ], "static_floor_trap", COLOURS.RED, true));
         break;
       case 3:
         this.objects.push(new Base_Static([this.dimensions.w, this.dimensions.h / 8], [0, 7 * this.dimensions.h / 8 ], "static_floor_trap", COLOURS.RED, true));
         break;
       case 4:
+        this.objects.push(new Base_Static([this.dimensions.w, this.dimensions.h / 8], [0, 7 * this.dimensions.h / 8 ], "static_floor", COLOURS.LGREY, false));
+        this.objects.push(new Base_Static([this.dimensions.w / 4, this.dimensions.h / 2], [ 3 * this.dimensions.w / 8, 3 * this.dimensions.h / 8 ], "static_floor", COLOURS.LGREY, true));
         break;
       case 5:
-        break;
-      case 6:
+        this.objects.push(new Base_Static([this.dimensions.w, this.dimensions.h / 8], [0, 7 * this.dimensions.h / 8 ], "static_floor", COLOURS.LGREY, false));
+        this.objects.push(new Base_Static([this.dimensions.w / 2, this.dimensions.h / 8], [this.dimensions.w / 4, 0 ], "static_floor", COLOURS.RED, true));
         break;
     }
   }
@@ -94,12 +96,12 @@ class Stage extends Base_Object {
 
     // how is this orientated ?? please comment in :)
     let grid = [
+      [1, 0, 1],
       [1, 1, 1],
-      [1, 2, 1],
-      [0, 0, 0],
-      [1, 2, 1],
-      [1, 0, 0],
-      [3, 3, 1]
+      [1, 2, 0],
+      [1, 3, 1],
+      [1, 4, 0],
+      [1, 5, 1]
     ];
 
     for (let i = 0; i < cols; i++) {
