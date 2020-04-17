@@ -17,7 +17,7 @@ class Timer {
     this.startTime = Date.now();
   }
 
-  getTime(isMilliseconds) {
+  getTime(isMilliseconds = true) {
     if (isMilliseconds) { return Date.now() - this.startTime; }
     else { return (Date.now() - this.startTime) / 1000; }
   }
