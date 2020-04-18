@@ -48,6 +48,7 @@ class Base_Sprite extends Base_Object {
     this.lives = lives;
     this.states = states;
     this.row = row;
+    // TODO eventually change deltas to be % of screen
     this.max_deltas = {max_x : max_deltas[0], max_y : max_deltas[1]};
   }
 
@@ -72,7 +73,7 @@ class Base_Sprite extends Base_Object {
     if (this.deltas.dy*-1 > this.max_deltas.max_y) this.deltas.dy = this.max_deltas.max_y*-1;
   }
 
-  move(time=0.01, all_objects=[]) {
+  move(time=0.01, all_objects=[], object_offsets={x:0, y:0}) {
     // sprites can't move into walls so legal move check needed
     this.physics()
 
@@ -81,16 +82,15 @@ class Base_Sprite extends Base_Object {
 
     this.pos.x += this.deltas.dx * time;
 
-    if (!this.legal_move(all_objects)){
+    if (!this.legal_move(all_objects, object_offsets)){
       this.pos.x -= this.deltas.dx * time;
       this.deltas.dx = 0;
     }
 
     this.pos.y += this.deltas.dy * time;
 
-    if (this.legal_move(all_objects) == false){
+    if (!this.legal_move(all_objects, object_offsets)){
       this.pos.y -= this.deltas.dy * time;
-      console.log("HGWHIDHEIoadhidchbadsdsbh")
       this.deltas.dy *= 0.6;
     }
   }
@@ -99,11 +99,11 @@ class Base_Sprite extends Base_Object {
   // TODO fix this u shit mofo -- it's done jheez calm your tits someone's in a bad mood
   // okay so it was less fixed than was initially believed
   // is fixed now though:)
-    collided(object){
-      if (this.pos.x < object.pos.x + object.dimensions.w &&
-          this.pos.x + this.dimensions.w > object.pos.x &&
-          this.pos.y < object.pos.y + object.dimensions.h &&
-          this.pos.y + this.dimensions.h > object.pos.y) {
+    collided(object, object_offsets){
+      if (this.getleft() < object.getRight() + object_offsets.x &&
+          this.getRight() > object.getLeft() + object_offsets.x &&
+          this.getTop() < object.getBottom() + object_offsets.y &&
+          this.getBottom() > object.getTop() + object_offsets.y) {
             return true;
       } else {
           return false;
