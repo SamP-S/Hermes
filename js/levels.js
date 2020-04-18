@@ -140,7 +140,8 @@ class Level extends Base_Object {
     this.id = id;
     this.stages = [];
     this.stages.push(new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [0, 0], "test_stage", 6, 3 ));
-    this.player = new Player();
+    this.sprites = [];
+    this.sprites.push(new Player());
   }
 
   // Use to append or pop stages from the list according to the player position
@@ -176,7 +177,7 @@ class Level extends Base_Object {
   // Min 1
   // Max 2
   // Used in getTiles
-  getStages(left, right, up, down) {
+  getStages(left, right, top, bottom) {
     let s = [];
     let l, r;
     for (let i = 0; i < this.stages.length; i++) {
@@ -198,12 +199,12 @@ class Level extends Base_Object {
     return s;
   }
 
-  getTiles(left, right, up, down) {
-    let s = this.getStages(left, right, up, down);
+  getTiles(left, right, top, bottom) {
+    let s = this.getStages(left, right, top, bottom);
     let rows = [];
     let cols = [];
-    let t = [];
-    let l, r, u, d, n_cols, n_rows, stage;
+    let tiles = [];
+    let l, r, t, b, n_cols, n_rows, stage;
     for (let iter = 0; iter < s.length; iter++) {
       stage = s[iter];
 
@@ -213,24 +214,24 @@ class Level extends Base_Object {
       // Adjust coordinate space
       l = left - stage.getLeft();
       r = right - stage.getLeft();
-      u = up - stage.getTop();
-      d = down - stage.getTop();
+      t = top - stage.getTop();
+      b = bottom - stage.getTop();
 
       // Use integer division to check row/col
       let l_col = Math.floor(l / (stage.dimensions.w / stage.cols));
       let r_col = Math.floor(r / (stage.dimensions.w / stage.cols));
-      let u_row = Math.floor(u / (stage.dimensions.h / stage.rows));
-      let d_row = Math.floor(d / (stage.dimensions.h / stage.rows));
+      let t_row = Math.floor(u / (stage.dimensions.h / stage.rows));
+      let b_row = Math.floor(d / (stage.dimensions.h / stage.rows));
 
       // row indexes for defined area of stage
-      if (u_row >= stage.rows || d_row >= stage.rows) {
+      if (t_row >= stage.rows || b_row >= stage.rows) {
         alert("player outside of stage row limit ?!");
-        return t;
-      } else if (u_row == d_row) {
-        rows.push(u_row);
+        return tiles;
+      } else if (t_row == b_row) {
+        rows.push(t_row);
       } else {
-        rows.push(u_row);
-        rows.push(d_row);
+        rows.push(t_row);
+        rows.push(b_row);
       }
 
       // column indexes for defined area of stage
@@ -247,11 +248,11 @@ class Level extends Base_Object {
 
       for (let i = 0; i < cols.length; i++) {
         for (let j = 0; j < rows.length; j++) {
-          t.push(stage.tiles[i][j]);
+          tiles.push(stage.tiles[i][j]);
         }
       }
     }
-    return t;
+    return tiles;
   }
 
 }
