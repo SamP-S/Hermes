@@ -226,6 +226,13 @@ class Graphics {
 
     // Draw Call
     this.render(scene);
+
+    // Garbage collecting
+    delete scene;
+    delete mesh;
+    delete material;
+    delete geometry;
+    delete t;
   }
 
   // Simplified Draw call by passing an objects scene
