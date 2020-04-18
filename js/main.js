@@ -2,7 +2,6 @@
 // Game Logic
 
 var keyboard = new Keyboard();
-//var player = new Player();
 var gameNotOver = true;
 var g = new Graphics();
 //var test = new Test_Object();
@@ -46,10 +45,9 @@ if (!g.renderer) {
   main();
 }
 
- function player_processing() {
+ function player_processing(relevant_tiles) {
+
    player_movement();
-   /* player.move is currently paralysed -- need to speak to soom about objects and possibly write an object
-     parser function, to decide which to pass into player.move */
    player.move(deltaTime, stage.tiles[0]);
  }
 
@@ -79,8 +77,7 @@ function main() {
   //g.renderer.clear();
   level.move(keyboard);
   level.render(g);
-  //player_processing();
-  //player.render(g);
+  player_processing(t);
   //render_objects();
 
 }
