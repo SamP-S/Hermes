@@ -95,6 +95,63 @@ class Test_Object {
   }
 }
 
+
+
+/// Garbage Collecting ///
+
+// Dispose of single object in array
+function disposeNode(parentObject) {
+    parentObject.traverse(function (node) {
+        if (node instanceof THREE.Mesh) {
+            if (node.geometry) {
+                node.geometry.dispose();
+            }
+            if (node.material) {
+                var materialArray;
+                if (node.material instanceof THREE.MeshFaceMaterial || node.material instanceof THREE.MultiMaterial) {
+                    materialArray = node.material.materials;
+                }
+                else if(node.material instanceof Array) {
+                    materialArray = node.material;
+                }
+                if(materialArray) {
+                    materialArray.forEach(function (mtrl, idx) {
+                        if (mtrl.map) mtrl.map.dispose();
+                        if (mtrl.lightMap) mtrl.lightMap.dispose();
+                        if (mtrl.bumpMap) mtrl.bumpMap.dispose();
+                        if (mtrl.normalMap) mtrl.normalMap.dispose();
+                        if (mtrl.specularMap) mtrl.specularMap.dispose();
+                        if (mtrl.envMap) mtrl.envMap.dispose();
+                        mtrl.dispose();
+                    });
+                }
+                else {
+                    if (node.material.map) node.material.map.dispose();
+                    if (node.material.lightMap) node.material.lightMap.dispose();
+                    if (node.material.bumpMap) node.material.bumpMap.dispose();
+                    if (node.material.normalMap) node.material.normalMap.dispose();
+                    if (node.material.specularMap) node.material.specularMap.dispose();
+                    if (node.material.envMap) node.material.envMap.dispose();
+                    node.material.dispose();
+                }
+            }
+        }
+    });
+}
+
+// Dispose of object: disposeHierarchy (YOUR_OBJECT3D, disposeNode);
+function disposeHierarchy (node, callback)
+{
+    for (var i = node.children.length - 1; i >= 0; i--)
+    {
+        var child = node.children[i];
+        disposeHierarchy (child, callback);
+        callback (child);
+    }
+}
+
+
+
 class Graphics {
 
   constructor() {
@@ -146,68 +203,6 @@ class Graphics {
     let world_w = (pixel_w / size.w) * 2;
     let world_h = (pixel_h / size.h) * 2;
 
-
-    /// --- IGNORE DEPRECATED --- ///
-    // Buffer Attempt
-    /*
-    let points = [];
-    points.push(world_x.min, world_y.min, 0);
-    points.push(world_x.min, world_y.max, 0);
-    points.push(world_x.max, world_y.max, 0);
-    points.push(world_x.max, world_y.min, 0);
-
-    let points = [
-      0,      0,      0,
-      0.5,   0,      0,
-      0.5,   0.5,   0,
-    ];
-
-    let pointsDictionary = [
-      { x:0,    y:0,    z:0 },
-      { x:0.5, y:0,    z:0 },
-      { x:0.5, y:0.5, z:0 }
-    ];
-
-    let vertices = new Float32Array( [
-      0,      0,      0,
-      0.5,   0,      0,
-      0.5,   0.5,   0,
-    ] );
-
-    let vertexDictionary = new Float32Array([
-      { x:0,    y:0,    z:0 },
-      { x:0.5, y:0,    z:0 },
-      { x:0.5, y:0.5, z:0 }
-    ]);
-
-    let geometryBuffer = new THREE.BufferGeometry();
-    //geometryBuffer.setAttribute( 'position', new THREE.BufferAttribute( vertexPoints, 3 ) );
-    geometryBuffer.setFromPoints(pointsDictionary);
-    let geometry = geometryBuffer;
-    */
-
-    // Shape Attempt
-    /*
-    let points = [];
-    points.push( new THREE.Vector2( 0,    0 ) );
-    points.push( new THREE.Vector2( 0.5,  0 ) );
-    points.push( new THREE.Vector2( 0.5,  0.5 ) );
-    points.push( new THREE.Vector2( 0,    0.5 ) );
-
-    //points.push( new THREE.Vector2( world_x.min, world_y.min ) );
-    //points.push( new THREE.Vector2( world_x.max, world_y.min ) );
-    //points.push( new THREE.Vector2( world_x.max, world_y.max ) );
-    //points.push( new THREE.Vector2( world_x.min, world_y.max ) );
-
-    //for ( var i = 0; i < points.length; i ++ ) points[ i ].multiplyScalar( 100 );
-
-    let shape = new THREE.Shape(points);
-    let geometry = new THREE.ShapeGeometry(shape);
-    */
-
-    /// --- NORMAL --- ///
-
-    // Box Attempt
     // Generate box geometry
     let geometry = new THREE.BoxGeometry(world_w, world_h, 0.01);
 
@@ -227,12 +222,11 @@ class Graphics {
     // Draw Call
     this.render(scene);
 
-    // Garbage collecting
-    delete scene;
-    delete mesh;
-    delete material;
-    delete geometry;
-    delete t;
+
+    /// Garbage collecting ///
+    disposeHierarchy (scene, disposeNode);
+    disposeNode (mesh);
+
   }
 
   // Simplified Draw call by passing an objects scene
@@ -240,3 +234,65 @@ class Graphics {
     this.renderer.render(scene, this.camera);
   }
 }
+
+
+
+
+
+/// --- IGNORE DEPRECATED --- ///
+// Buffer Attempt
+/*
+let points = [];
+points.push(world_x.min, world_y.min, 0);
+points.push(world_x.min, world_y.max, 0);
+points.push(world_x.max, world_y.max, 0);
+points.push(world_x.max, world_y.min, 0);
+
+let points = [
+  0,      0,      0,
+  0.5,   0,      0,
+  0.5,   0.5,   0,
+];
+
+let pointsDictionary = [
+  { x:0,    y:0,    z:0 },
+  { x:0.5, y:0,    z:0 },
+  { x:0.5, y:0.5, z:0 }
+];
+
+let vertices = new Float32Array( [
+  0,      0,      0,
+  0.5,   0,      0,
+  0.5,   0.5,   0,
+] );
+
+let vertexDictionary = new Float32Array([
+  { x:0,    y:0,    z:0 },
+  { x:0.5, y:0,    z:0 },
+  { x:0.5, y:0.5, z:0 }
+]);
+
+let geometryBuffer = new THREE.BufferGeometry();
+//geometryBuffer.setAttribute( 'position', new THREE.BufferAttribute( vertexPoints, 3 ) );
+geometryBuffer.setFromPoints(pointsDictionary);
+let geometry = geometryBuffer;
+*/
+
+// Shape Attempt
+/*
+let points = [];
+points.push( new THREE.Vector2( 0,    0 ) );
+points.push( new THREE.Vector2( 0.5,  0 ) );
+points.push( new THREE.Vector2( 0.5,  0.5 ) );
+points.push( new THREE.Vector2( 0,    0.5 ) );
+
+//points.push( new THREE.Vector2( world_x.min, world_y.min ) );
+//points.push( new THREE.Vector2( world_x.max, world_y.min ) );
+//points.push( new THREE.Vector2( world_x.max, world_y.max ) );
+//points.push( new THREE.Vector2( world_x.min, world_y.max ) );
+
+//for ( var i = 0; i < points.length; i ++ ) points[ i ].multiplyScalar( 100 );
+
+let shape = new THREE.Shape(points);
+let geometry = new THREE.ShapeGeometry(shape);
+*/
