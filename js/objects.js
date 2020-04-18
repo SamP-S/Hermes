@@ -52,9 +52,9 @@ class Base_Sprite extends Base_Object {
   }
 
   // draw routine. Must have graphics passed as parameter
-  render(graphics) {
+  render(graphics, origin) {
     console.log("Drawing sprite (issa rectangle)");
-    graphics.drawRectangle(this.pos.x, this.pos.y, this.dimensions.w, this.dimensions.h, this.colour);
+    graphics.drawRectangle(this.pos.x + origin.x, this.pos.y + origin.y, this.dimensions.w, this.dimensions.h, this.colour);
   }
 
   physics(){
@@ -105,7 +105,7 @@ class Base_Sprite extends Base_Object {
           this.pos.y < object.pos.y + object.dimensions.h &&
           this.pos.y + this.dimensions.h > object.pos.y) {
             return true;
-      } else{
+      } else {
           return false;
         }
     }

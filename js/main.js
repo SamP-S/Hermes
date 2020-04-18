@@ -2,10 +2,10 @@
 // Game Logic
 
 var keyboard = new Keyboard();
-var player = new Player();
+//var player = new Player();
 var gameNotOver = true;
 var g = new Graphics();
-var test = new Test_Object();
+//var test = new Test_Object();
 var timer = new Timer();
 
 function player_movement() {
@@ -65,9 +65,9 @@ function main() {
   timer.reset();
 
   // Moved the player properties display cause i wanted it but not the movement
-  document.getElementById('is-it-moving').innerHTML = `x : ${player.pos.x.toFixed(2)}, y : ${player.pos.y.toFixed(2)} \ dx: ${player.deltas.dx.toFixed(2)}, dy : ${player.deltas.dy.toFixed(2)}`;
+  document.getElementById('is-it-moving').innerHTML = `x : ${level.player.pos.x.toFixed(2)}, y : ${level.player.pos.y.toFixed(2)} \ dx: ${level.player.deltas.dx.toFixed(2)}, dy : ${level.player.deltas.dy.toFixed(2)}`;
 
-  let t = level.getTiles(player.getLeft(), player.getRight(), player.getTop(), player.getBottom());
+  let t = level.getTiles(level.player.getLeft(), level.player.getRight(), level.player.getTop(), level.player.getBottom());
 
   // asks for new frame for rendering
   requestAnimationFrame(main);
@@ -77,9 +77,10 @@ function main() {
   // other pyshics Processing
   // Any other Processing
   //g.renderer.clear();
+  level.move(keyboard);
   level.render(g);
   //player_processing();
-  player.render(g);
+  //player.render(g);
   //render_objects();
 
 }

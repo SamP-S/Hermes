@@ -70,7 +70,7 @@ class Tile extends Base_Object {
 
   render(graphics, origin) {
     for (let i = 0; i < this.objects.length; i++) {
-      this.objects[i].render(graphics, origin);
+      this.objects[i].render(graphics, { x:this.pos.x + origin.x, y:this.pos.y + origin.y });
     }
   }
 
@@ -117,11 +117,11 @@ class Stage extends Base_Object {
     }
   }
 
-  render(graphics) {
+  render(graphics, origin) {
     for (let i = 0; i < this.tiles.length; i++) {
       let col = this.tiles[i];
       for (let j = 0; j < col.length; j++) {
-        col[j].render(graphics, col[j].pos);
+        col[j].render(graphics, { x:this.pos.x + origin.x, y:this.pos.y + origin.y });
       }
     }
   }
@@ -140,23 +140,36 @@ class Level extends Base_Object {
     this.id = id;
     this.stages = [];
     this.stages.push(new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [0, 0], "test_stage", 6, 3 ));
+    this.player = new Player();
   }
 
   // Use to append or pop stages from the list according to the player position
-  update(player) {
+  update() {
     // If static then leave
     if (this.id != -1) { return ; }
   }
 
   // Move function as the level moves not the player
-  move() {
+  move(keyboard) {
+    let left = keyboard.GetKeyState("A");
+    let right = keyboard.GetKeyState("D");
+    let up = keyboard.GetKeyState("W");
+    let down = keyboard.GetKeyState("S");
 
+    // horizontal movement
+    if (right) {
+      this.pos.x -= 1;
+      this.player.pos.x += 1;
+    }
+
+    // vertical player
   }
 
   render(graphics) {
     for (let i = 0; i < this.stages.length; i++) {
-      this.stages[i].render(graphics);
+      this.stages[i].render(graphics, this.pos);
     }
+    this.player.render(graphics, this.pos);
   }
 
   // Get list of stages the player is in
