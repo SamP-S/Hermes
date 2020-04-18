@@ -81,7 +81,7 @@ class Base_Sprite extends Base_Object {
 
     this.check_max_speeds();
 
-    this.pos.x += this.deltas.dx * time;
+    //this.pos.x += this.deltas.dx * time;
 
     if (!this.legal_move(all_objects, object_offsets)){
       this.pos.x -= this.deltas.dx * time;
@@ -101,7 +101,7 @@ class Base_Sprite extends Base_Object {
   // okay so it was less fixed than was initially believed
   // is fixed now though:)
     collided(object, object_offset){
-      if (this.getleft() < object.getRight() + object_offset.x &&
+      if (this.getLeft() < object.getRight() + object_offset.x &&
           this.getRight() > object.getLeft() + object_offset.x &&
           this.getTop() < object.getBottom() + object_offset.y &&
           this.getBottom() > object.getTop() + object_offset.y) {
@@ -117,10 +117,12 @@ class Base_Sprite extends Base_Object {
 
       if (objects.length !== object_offsets.length ) {
         console.log("objects & object offsets not aligned")
+        console.log("objects length: " + objects.length);
+        console.log("offsets length: " + object_offsets.length);
         return false; }
 
       objects.forEach((object, i) => {
-        if (this.collided(object, object_offset[i])){
+        if (this.collided(object, object_offsets[i])){
           console.log("legal move returns false");
           toReturn = false;
         }
