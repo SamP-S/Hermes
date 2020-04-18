@@ -114,7 +114,7 @@ class Base_Sprite extends Base_Object {
   // checks no collision occurs as result of move
     legal_move(objects=[], object_offsets=[]){
       let toReturn = true;
-      
+
       if (objects.length !== object_offsets.length ) {
         console.log("objects & object offsets not aligned")
         return false; }
