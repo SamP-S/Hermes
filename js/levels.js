@@ -132,6 +132,7 @@ class Stage extends Base_Object {
 // Each will have an ID refering to what level it is
 // "-1" id denotes an enless level.
 // Only implementing the endless level for now but will leave room to make static levels in the future
+// player MUST be sprites[0]
 class Level extends Base_Object {
   constructor(dimensions = [0,0], pos = [0,0], type = "level", id = -1) {
     super(dimensions, pos, type);
