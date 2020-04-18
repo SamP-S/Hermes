@@ -73,11 +73,12 @@ class Base_Sprite extends Base_Object {
     if (this.deltas.dy*-1 > this.max_deltas.max_y) this.deltas.dy = this.max_deltas.max_y*-1;
   }
 
-  move(time=0.01, all_objects=[], object_offsets={x:0, y:0}) {
-    // sprites can't move into walls so legal move check needed
+  // all_objects is list of objects that we give a fuck about
+  // object offsets is a list of equal length containing x and y
+  move(time=0.01, all_objects=[], object_offsets=[ {x:0, y:0}] ) {
+
     this.physics()
 
-    console.log("dx: " + this.deltas.dx);
     this.check_max_speeds();
 
     this.pos.x += this.deltas.dx * time;
@@ -99,11 +100,11 @@ class Base_Sprite extends Base_Object {
   // TODO fix this u shit mofo -- it's done jheez calm your tits someone's in a bad mood
   // okay so it was less fixed than was initially believed
   // is fixed now though:)
-    collided(object, object_offsets){
-      if (this.getleft() < object.getRight() + object_offsets.x &&
-          this.getRight() > object.getLeft() + object_offsets.x &&
-          this.getTop() < object.getBottom() + object_offsets.y &&
-          this.getBottom() > object.getTop() + object_offsets.y) {
+    collided(object, object_offset){
+      if (this.getleft() < object.getRight() + object_offset.x &&
+          this.getRight() > object.getLeft() + object_offset.x &&
+          this.getTop() < object.getBottom() + object_offset.y &&
+          this.getBottom() > object.getTop() + object_offset.y) {
             return true;
       } else {
           return false;
@@ -111,10 +112,15 @@ class Base_Sprite extends Base_Object {
     }
 
   // checks no collision occurs as result of move
-    legal_move(objects=[]){
+    legal_move(objects=[], object_offsets=[]){
       let toReturn = true;
-      objects.forEach((item, i) => {
-        if (this.collided(item)){
+      
+      if (objects.length !== object_offsets.length ) {
+        console.log("objects & object offsets not aligned")
+        return false; }
+
+      objects.forEach((object, i) => {
+        if (this.collided(object, object_offset[i])){
           console.log("legal move returns false");
           toReturn = false;
         }
