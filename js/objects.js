@@ -40,7 +40,7 @@ class Base_Object {
 
 class Base_Sprite extends Base_Object {
   constructor(dimensions=[0,0], start_pos=[0,0], type="sprite_base", colour = COLOURS.RED,
-              lives=0, states={none: "none"}, mass=100, row=0, max_deltas = [300, 300]){
+              lives=0, states={none: "none"}, mass=100, row=0, max_deltas = [200, 200]){
     super(dimensions, start_pos, type);
     this.colour = colour;
     this.mass = mass;
