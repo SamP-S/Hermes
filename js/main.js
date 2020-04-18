@@ -10,17 +10,17 @@ var timer = new Timer();
 function player_movement() {
 
   if (keyboard.GetKeyState('A')) {
-    player.deltas.dx -= 80;
+    level.sprites[0].deltas.dx -= 80;
   }
 
-  if (keyboard.GetKeyState('W') && !player.states.jumping) {
-    player.deltas.dy -= 500;
-    player.states.jumping = true;
+  if (keyboard.GetKeyState('W') && !level.sprites[0].states.jumping) {
+    level.sprites[0].deltas.dy -= 500;
+    level.sprites[0].states.jumping = true;
 
   }
 
   if (keyboard.GetKeyState('D')) {
-    player.deltas.dx += 80;
+    level.sprites[0].deltas.dx += 80;
   }
 
 }
@@ -45,16 +45,24 @@ if (!g.renderer) {
   main();
 }
 
- function player_processing(relevant_tiles) {
+function object_preprocessing(tiles) {
+  let toReturn = [[], []];
+  let temp;
+  tiles.forEach((tile, i) => {
+    tile.objects.forEach((object, j) => {
+      temp = {x: tile.pos.x, y : tile.pos.y};
+      toReturn[0].push( object );
+      toReturn[1].push( temp );
+    });
+  });
+  return toReturn;
+}
 
-   player_movement();
-   player.move(deltaTime, stage.tiles[0]);
- }
-
- function render_objects() {
-   // TODO adapt this to iterate through list of objects
-   player.render(g);
-   stage.render(g);
+function player_processing() {
+  let t = level.getTiles(level.sprites[0].getLeft(), level.sprites[0].getRight(), level.sprites[0].getTop(), level.sprites[0].getBottom());
+  let hold = object_preprocessing(t);
+  player_movement();
+  level.sprites[0].move(deltaTime, hold[0], hold[1]);
  }
 
 function main() {
@@ -62,22 +70,16 @@ function main() {
   deltaTime = timer.getTime();
   timer.reset();
 
+
   // Moved the player properties display cause i wanted it but not the movement
   document.getElementById('is-it-moving').innerHTML = `x : ${level.sprites[0].pos.x.toFixed(2)}, y : ${level.sprites[0].pos.y.toFixed(2)} \ dx: ${level.sprites[0].deltas.dx.toFixed(2)}, dy : ${level.sprites[0].deltas.dy.toFixed(2)}`;
-
-  let t = level.getTiles(level.sprites[0].getLeft(), level.sprites[0].getRight(), level.sprites[0].getTop(), level.sprites[0].getBottom());
 
   // asks for new frame for rendering
   requestAnimationFrame(main);
 
-  // player_movement()
-  // other object movement Processing
-  // other pyshics Processing
-  // Any other Processing
-  //g.renderer.clear();
   level.move(keyboard);
   level.render(g);
-  player_processing(t);
+  player_processing();
   //render_objects();
 
 }
