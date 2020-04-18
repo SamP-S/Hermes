@@ -160,7 +160,7 @@ class Level extends Base_Object {
     // horizontal movement
     if (right) {
       this.pos.x -= 1;
-      this.player.pos.x += 1;
+      this.sprites[0].pos.x += 1;
     }
 
     // vertical player
@@ -170,7 +170,9 @@ class Level extends Base_Object {
     for (let i = 0; i < this.stages.length; i++) {
       this.stages[i].render(graphics, this.pos);
     }
-    this.player.render(graphics, this.pos);
+    for (let i = 0; i < this.sprites.length; i++) {
+      this.sprites[i].render(graphics, this.pos);
+    }
   }
 
   // Get list of stages the player is in
@@ -220,8 +222,8 @@ class Level extends Base_Object {
       // Use integer division to check row/col
       let l_col = Math.floor(l / (stage.dimensions.w / stage.cols));
       let r_col = Math.floor(r / (stage.dimensions.w / stage.cols));
-      let t_row = Math.floor(u / (stage.dimensions.h / stage.rows));
-      let b_row = Math.floor(d / (stage.dimensions.h / stage.rows));
+      let t_row = Math.floor(t / (stage.dimensions.h / stage.rows));
+      let b_row = Math.floor(b / (stage.dimensions.h / stage.rows));
 
       // row indexes for defined area of stage
       if (t_row >= stage.rows || b_row >= stage.rows) {
