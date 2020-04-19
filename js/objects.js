@@ -40,7 +40,7 @@ class Base_Object {
 
 class Base_Sprite extends Base_Object {
   constructor(dimensions=[0,0], start_pos=[0,0], type="sprite_base", colour = COLOURS.RED,
-              lives=0, states={none: "none"}, mass=100, row=0, max_deltas = [200, 200]){
+              lives=0, states={none: "none"}, mass=100, row=0, max_deltas = [300, 50]){
     super(dimensions, start_pos, type);
     this.colour = colour;
     this.mass = mass;
@@ -62,7 +62,7 @@ class Base_Sprite extends Base_Object {
     this.deltas.dx *= (1 - (this.mass / 2000)); // friction
     // TODO when player height is confirmed come back here and make it real-world ish
     this.deltas.dy += (this.mass * GRAVITY - AIR_RESIST) / this.mass;
-    if (this.pos.y > 300 && this.deltas.dy > 0) this.deltas.dy = 0;
+    // if (/* this.pos.y > 300 && this.deltas.dy > 0*/ this.deltas.dy < 10) this.deltas.dy = 0;
   }
 
   check_max_speeds(){
