@@ -154,14 +154,9 @@ class Level extends Base_Object {
   // Move function as the level moves not the player
   // but should keep it relative to player physics
   move(time) {
-  /*  let left = keyboard.GetKeyState("A");
-    let right = keyboard.GetKeyState("D");
-    let up = keyboard.GetKeyState("W");
-    let down = keyboard.GetKeyState("S"); */
-
-    // horizontal movement
-    this.pos.x -= this.sprites[0].deltas.x * time;
-    this.sprites[0].pos.x += this.sprites[0].deltas.x * time;
+    // horizontal movity move
+    this.pos.x -= this.sprites[0].deltas.dx * time;
+    this.sprites[0].pos.x += this.sprites[0].deltas.dx * time;
 
     // vertical player movement doesn't move the level (as I understand it)
   }
