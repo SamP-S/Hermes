@@ -77,7 +77,7 @@ function main() {
   // asks for new frame for rendering
   requestAnimationFrame(main);
 
-  level.move(keyboard);
+  level.move(deltaTime/1000);
   level.render(g);
   player_processing();
   //render_objects();
