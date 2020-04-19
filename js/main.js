@@ -62,7 +62,7 @@ function player_processing() {
   let t = level.getTiles(level.sprites[0].getLeft(), level.sprites[0].getRight(), level.sprites[0].getTop(), level.sprites[0].getBottom());
   let hold = object_preprocessing(t);
   player_movement();
-  level.sprites[0].move(deltaTime, hold[0], hold[1]);
+  level.sprites[0].move(deltaTime/1000, hold[0], hold[1]);
  }
 
 function main() {
