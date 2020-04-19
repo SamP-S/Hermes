@@ -175,6 +175,11 @@ class Graphics {
       // Resize Event Listener <-- ADD LATER
       //window.addEventListener("resize", this.windowResize);
 
+      // Added fixed dependencies that can be modified per each drawRectangle call
+      // This removes the need to destroy the objects as they're reused to improve performance
+      // Draw Rectangle Dependencies
+      this.draw = { scene: new THREE.Scene() };
+      this.draw.scene.add(new THREE.Mesh(new THREE.BoxGeometry(1, 1, 0.1), MATERIAL.WHITE));
   }
 
   /*
@@ -186,8 +191,13 @@ class Graphics {
 
   // Draws Filled rectangle using pixel co-ordinates
   // enter colour as hex -> 0x------
+  /*
+
+  ///--DEPRECATED--///
+
   drawRectangle(pixel_x, pixel_y, pixel_w, pixel_h, colour) {
     // No validation on input so no negative widths and shit alwite
+    let timer = new Timer();
 
     // Size dictionary for the canvas Size
     let size = {
@@ -202,7 +212,7 @@ class Graphics {
     let world_h = (pixel_h / size.h) * 2;
 
     // Generate box geometry
-    let geometry = new THREE.BoxGeometry(world_w, world_h, 0.01);
+    let geometry = new BoxGeometry(world_w, world_h, 0.01);
 
     // Translates from centre (0, 0)
     let t = new THREE.Vector2( world_x + world_w / 2, world_y + world_h / 2 );
@@ -216,16 +226,19 @@ class Graphics {
     // Make scene
     let scene = new THREE.Scene();
     scene.add(mesh);
+    console.log("drawRectangle preprocessing time ", timer.getTime());
 
     // Draw Call
     this.render(scene);
-    
+    console.log("drawRectangle render time ", timer.getTime());
+
     /// Garbage collecting ///
     disposeHierarchy (scene, disposeNode);
     disposeNode (mesh);
     disposeMaterial(material);
     geometry.dispose();
     scene.dispose();
+    console.log("drawRectangle disposal time ", timer.getTime());
   }
 
   // Simplified Draw call by passing an objects scene
@@ -233,8 +246,47 @@ class Graphics {
     this.renderer.render(scene, this.camera);
   }
 }
+*/
 
+drawRectangle(pixel_x, pixel_y, pixel_w, pixel_h, colour) {
+  // No validation on input so no negative widths and shit alwite
+  let timer = new Timer();
 
+  // Size dictionary for the canvas Size
+  let size = {
+    w: this.renderer.domElement.width ,
+    h: this.renderer.domElement.height
+  };
+
+  // GL Space coordinates from the screen ("pixel") coordinates
+  let world_x = (pixel_x / size.w) * 2 - 1;
+  let world_y = (pixel_y / size.h) * 2 - 1;
+  let world_w = (pixel_w / size.w) * 2;
+  let world_h = (pixel_h / size.h) * 2;
+
+  let t = new THREE.Vector2( world_x + world_w / 2, world_y + world_h / 2 );
+
+  this.draw.scene.children[0].material.color.setHex( colour );
+  this.draw.scene.children[0].geometry.scale(world_w, world_h, 1);
+  this.draw.scene.children[0].geometry.translate(t.x, t.y, 0);
+  console.log("drawRectangle preprocessing time ", timer.getTime());
+
+  // Draw Call
+  this.render(this.draw.scene);
+  console.log("drawRectangle render time ", timer.getTime());
+
+  this.draw.scene.children[0].geometry.translate(-t.x, -t.y, 0);
+  let div_w = 1 / world_w;
+  let div_h = 1 / world_h;
+  this.draw.scene.children[0].geometry.scale(div_w, div_h, 1);
+  console.log("drawRectangle postprocessing time ", timer.getTime());
+}
+
+// Simplified Draw call by passing an objects scene
+render(scene) {
+  this.renderer.render(scene, this.camera);
+}
+}
 
 
 

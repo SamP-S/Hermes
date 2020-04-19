@@ -87,10 +87,16 @@ function main() {
 
   // asks for new frame for rendering
   requestAnimationFrame(main);
+  //console.log("requestAnimationFrame time:", timer.getTime());
 
   level.move(deltaTime/1000);
+  //console.log("move time:", timer.getTime());
+
   level.render(g);
+  //console.log("levelRender time:", timer.getTime());
+
   player_processing();
+  //console.log("playerProcessing time:", timer.getTime());
   //render_objects();
 
 }
