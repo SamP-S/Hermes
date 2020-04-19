@@ -40,9 +40,12 @@ First attempt will use random selection of tiles according to some game logic ru
 class Tile extends Base_Object {
 
   // id is enumerated tile type; dimensions(width & height) in world space
-  constructor( dimensions, pos, id) {
+  constructor( dimensions, pos, id, col, row, stageId) {
     super( dimensions, pos, "tile_" + id.toString() + "_x" + pos[0].toString() + "y" + pos[1].toString() );
     this.objects = [];
+    this.col = col;
+    this.row = row;
+    this.stageId = stageId;
     switch (id) {
       // check enumerated TILE types for coresponding type
       case 0:
@@ -82,9 +85,10 @@ class Tile extends Base_Object {
 
 
 class Stage extends Base_Object {
-  constructor(dimensions = [0,0], pos = [0, 0], type = "stage", cols = 6, rows = 3) {
+  constructor(dimensions = [0,0], pos = [0, 0], type = "stage", id = -1, cols = 6, rows = 3) {
     super(dimensions, pos, type);
 
+    this.id = id;
     this.cols = cols;
     this.rows = rows;
 
@@ -106,7 +110,7 @@ class Stage extends Base_Object {
 
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
-        t = new Tile([this.dimensions.w / cols, this.dimensions.h / rows], [x, y], grid[i][j]);
+        t = new Tile([this.dimensions.w / cols, this.dimensions.h / rows], [x, y], grid[i][j], i, j, this.id);
         col.push(t);
         y += this.dimensions.h / rows;
       }
@@ -140,7 +144,7 @@ class Level extends Base_Object {
     else { this.type += "_static"; }
     this.id = id;
     this.stages = [];
-    this.stages.push(new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [0, 0], "test_stage", 6, 3 ));
+    this.stages.push(new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [0, 0], "test_stage", this.stages.length , 6, 3 ));
     this.sprites = [];
     this.sprites.push(new Player());
   }
@@ -245,7 +249,9 @@ class Level extends Base_Object {
 
       for (let i = 0; i < cols.length; i++) {
         for (let j = 0; j < rows.length; j++) {
-          tiles.push(stage.tiles[i][j]);
+          let col = cols[i];
+          let row = rows[j];
+          tiles.push(stage.tiles[col][row]);
         }
       }
     }

@@ -50,7 +50,10 @@ function object_preprocessing(tiles) {
   let temp;
   tiles.forEach((tile, i) => {
     tile.objects.forEach((object, j) => {
+      let stage = level.stages[tile.stageId - level.stages[0].id];
       temp = {x: tile.pos.x, y : tile.pos.y};
+      temp.x += stage.pos.x;
+      temp.y += stage.pos.y;
       toReturn[0].push( object );
       toReturn[1].push( temp );
     });
@@ -60,6 +63,14 @@ function object_preprocessing(tiles) {
 
 function player_processing() {
   let t = level.getTiles(level.sprites[0].getLeft(), level.sprites[0].getRight(), level.sprites[0].getTop(), level.sprites[0].getBottom());
+  let offsets = [];
+
+  for (let i = 0; i < t.length; i++) {
+    let stage = level.stages[t[0].stageId - level.stages[0].id];
+    offsets.push({X:t[i].pos.x + stage.pos.x, y:t[i].pos.y + stage.pos.y});
+  }
+
+
   let hold = object_preprocessing(t);
   player_movement();
   level.sprites[0].move(deltaTime/1000, hold[0], hold[1]);
