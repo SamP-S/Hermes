@@ -94,8 +94,9 @@ class Stage extends Base_Object {
 
     this.tiles = [];
     let col = [];
-    let x = this.pos.x;
-    let y = this.pos.y;
+    // x starts at 0 as is relative to stage position - changed from stage.pos.x in earlier version
+    let x = 0;
+    let y = 0;
     let t;
 
     // how is this orientated ?? please comment in :)
