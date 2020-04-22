@@ -13,38 +13,38 @@ class Keyboard {
     this.data = [ false, false, false, false, false ];
   }
 
+  // What was once a bug is now a feature for swtich case uses
+  // When no "BREAK" is used the code execution falls through
+  // Therefore multiple can use the same code as an effective "OR"
+
   SetKeyState(keyCode, state) {
     switch(keyCode) {
-      // wasd
+      case 38: // Up Arrow
       case 87: // W
+      case 119: // w
         this.data[0] = state;
-        break;
-      case 65: // A
-        this.data[1] = state;
-        break;
-      case 83: // S
-        this.data[2] = state;
-        break;
-      case 68: // D
-        this.data[3] = state;
         break;
 
-      // Arrow Keys
-      case 38: // Up Arrow
-        this.data[0] = state;
-        break;
-      case 37: // Left Arrow
+      case 37:  // Left Arrow
+      case 65:  // A
+      case 97:  // a
         this.data[1] = state;
         break;
-      case 40: // Down Arrow
+
+      case 40:  // Down Arrow
+      case 83:  // S
+      case 115: // s
         this.data[2] = state;
         break;
-      case 39: // Right Arrow
+
+      case 39:  // Right Arrow
+      case 68:  // D
+      case 100: // d
         this.data[3] = state;
         break;
 
       // Escape
-      case 27: // Escape
+      case 27:
         this.data[4] = state;
         break;
     }
@@ -53,38 +53,29 @@ class Keyboard {
   GetKeyState(key) {
     let keyCode = key.charCodeAt(0);
     switch(keyCode) {
-      // wasd
-      case 87: // W
-        return this.data[0];
-        break;
-      case 65: // A
-        return this.data[1];
-        break;
-      case 83: // S
-        return this.data[2];
-          break;
-      case 68: // D
-        return this.data[3];
-        break;
-
-      // Arrow Keys
       case 38: // Up Arrow
+      case 87: // W
+      case 119: // w
         return this.data[0];
-        break;
-      case 37: // Left Arrow
+
+      case 37:  // Left Arrow
+      case 65:  // A
+      case 97:  // a
         return this.data[1];
-        break;
-      case 40: // Down Arrow
+
+      case 40:  // Down Arrow
+      case 83:  // S
+      case 115: // s
         return this.data[2];
-        break;
-      case 39: // Right Arrow
+
+      case 39:  // Right Arrow
+      case 68:  // D
+      case 100: // d
         return this.data[3];
-        break;
 
       // Escape
-      case 27: // Escape
+      case 27:
         return this.data[4];
-        break;
       }
   }
 
