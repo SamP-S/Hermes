@@ -1,9 +1,4 @@
 // LEVEL CONSTANT PROPERTIES
-const STAGE = {
-  LEVELS : 3,
-  LENGTH : 12
-}
-
 const PROBABILITY = {
   TRAP : 0.05,
   LEVEL: 0.9
@@ -13,8 +8,8 @@ const TILE = {
   AIR : 0,
   FLOOR : 1,
   TRAP : 2,
-  TRAP_THIN : 3,
-  TRAP_FLOOR : 4,
+  TRAP_FLOOR : 3,
+  TRAP_THIN : 4,
   TRAP_CEILING : 5
 }
 
@@ -45,30 +40,222 @@ First attempt will use random selection of tiles according to some game logic ru
 class Tile extends Base_Object {
 
   // id is enumerated tile type; dimensions(width & height) in world space
-  constructor( id, dimensions ) {
-    super( dimensions, [0,0], COLOURS.LGREY, "tile_" + id.toString() );
-    this.scene = new THREE.Scene();
+  constructor( dimensions, pos, id, col, row, stageId) {
+    super( dimensions, pos, "tile_" + id.toString() + "_x" + pos[0].toString() + "y" + pos[1].toString() );
+    this.objects = [];
+    this.col = col;
+    this.row = row;
+    this.stageId = stageId;
     switch (id) {
       // check enumerated TILE types for coresponding type
       case 0:
+        break;
       case 1:
-        let geometry = THREE.BoxGeometry( this.dimensions.width, this.dimensions.height, 0.01 )
+        this.objects.push(new Base_Static([this.dimensions.w, this.dimensions.h / 8], [0, 7 * this.dimensions.h / 8 ], "static_floor", COLOURS.LGREY, false));
+        break;
       case 2:
+        this.objects.push(new Base_Static([this.dimensions.w, this.dimensions.h / 8], [0, 7 * this.dimensions.h / 8 ], "static_floor", COLOURS.LGREY, false));
+        this.objects.push(new Base_Static([this.dimensions.w / 2, this.dimensions.h / 8], [this.dimensions.w / 4, 3 * this.dimensions.h / 4 ], "static_floor_trap", COLOURS.RED, true));
+        break;
       case 3:
+        this.objects.push(new Base_Static([this.dimensions.w, this.dimensions.h / 8], [0, 7 * this.dimensions.h / 8 ], "static_floor_trap", COLOURS.RED, true));
+        break;
       case 4:
+        this.objects.push(new Base_Static([this.dimensions.w, this.dimensions.h / 8], [0, 7 * this.dimensions.h / 8 ], "static_floor", COLOURS.LGREY, false));
+        this.objects.push(new Base_Static([this.dimensions.w / 4, this.dimensions.h / 2], [ 3 * this.dimensions.w / 8, 3 * this.dimensions.h / 8 ], "static_floor", COLOURS.LGREY, true));
+        break;
       case 5:
-      case 6:
+        this.objects.push(new Base_Static([this.dimensions.w, this.dimensions.h / 8], [0, 7 * this.dimensions.h / 8 ], "static_floor", COLOURS.LGREY, false));
+        this.objects.push(new Base_Static([this.dimensions.w / 2, this.dimensions.h / 8], [this.dimensions.w / 4, 0 ], "static_floor", COLOURS.RED, true));
+        break;
     }
   }
 
-  render(graphics) {
-    graphics.render(this.scene);
+  render(graphics, origin) {
+    for (let i = 0; i < this.objects.length; i++) {
+      this.objects[i].render(graphics, { x:this.pos.x + origin.x, y:this.pos.y + origin.y });
+    }
+  }
+
+  kill() {
+    delete this.objects;
+    this.objects = [];
   }
 }
 
 
-class Stage {
-  constructor() {
+class Stage extends Base_Object {
+  constructor(dimensions = [0,0], pos = [0, 0], type = "stage", id = -1, cols = 6, rows = 3) {
+    super(dimensions, pos, type);
 
+    this.id = id;
+    this.cols = cols;
+    this.rows = rows;
+
+    this.tiles = [];
+    let col = [];   // what the fuck is 'col'
+    let x = this.pos.x;
+    let y = this.pos.y;
+    let t;
+
+    // how is this orientated ?? please comment in :)
+    let grid = [
+      [1, 0, 1],
+      [1, 1, 1],
+      [1, 2, 0],
+      [1, 3, 1],
+      [1, 4, 0],
+      [1, 5, 1]
+    ];
+
+    for (let i = 0; i < cols; i++) {
+      for (let j = 0; j < rows; j++) {
+        t = new Tile([this.dimensions.w / cols, this.dimensions.h / rows], [x, y], grid[i][j], i, j, this.id);
+        col.push(t);
+        y += this.dimensions.h / rows;
+      }
+      this.tiles.push(col);
+      x += this.dimensions.w / cols;
+      y = 0;
+      col = [];
+    }
   }
+
+  render(graphics, origin) {
+    for (let i = 0; i < this.tiles.length; i++) {
+      let col = this.tiles[i];
+      for (let j = 0; j < col.length; j++) {
+        col[j].render(graphics, { x:this.pos.x + origin.x, y:this.pos.y + origin.y });
+      }
+    }
+  }
+}
+
+
+// level object will contain a list of stages
+// Each will have an ID refering to what level it is
+// "-1" id denotes an enless level.
+// Only implementing the endless level for now but will leave room to make static levels in the future
+// player MUST be sprites[0]
+class Level extends Base_Object {
+  constructor(dimensions = [0,0], pos = [0,0], type = "level", id = -1) {
+    super(dimensions, pos, type);
+    if (id == -1) { this.type += "_endless"; }
+    else { this.type += "_static"; }
+    this.id = id;
+    this.stages = [];
+    this.stages.push(new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [0, 0], "test_stage", this.stages.length , 6, 3 ));
+    this.sprites = [];
+    this.sprites.push(new Player());
+  }
+
+  // Use to append or pop stages from the list according to the player position
+  update() {
+    // If static then leave
+    if (this.id != -1) { return ; }
+  }
+
+  // Move function as the level moves not the player
+  // but should keep it relative to player physics
+  move(time) {
+    // horizontal movity move
+    this.pos.x -= this.sprites[0].deltas.dx * time;
+    this.sprites[0].pos.x += this.sprites[0].deltas.dx * time;
+
+    // vertical player movement doesn't move the level (as I understand it)
+  }
+
+  render(graphics) {
+    for (let i = 0; i < this.stages.length; i++) {
+      this.stages[i].render(graphics, this.pos);
+    }
+    for (let i = 0; i < this.sprites.length; i++) {
+      this.sprites[i].render(graphics, this.pos);
+    }
+  }
+
+  // Get list of stages the player is in
+  // Min 1
+  // Max 2
+  // Used in getTiles
+  getStages(left, right, top, bottom) {
+    let s = [];
+    let l, r;
+    for (let i = 0; i < this.stages.length; i++) {
+      l = this.stages[i].getLeft();
+      r = this.stages[i].getRight();
+
+      // Check which stage(s) left and right are in
+      if (left > l && left < r && right > l && right < r) {
+        s.push(this.stages[i]);
+        break;
+      } else if (left > l && left) {
+        s.push(this.stages[i]);
+        continue;
+      } else if (right > l && right < r) {
+        s.push(this.stages[i]);
+        break;
+      }
+    }
+    return s;
+  }
+
+  getTiles(left, right, top, bottom) {
+    let s = this.getStages(left, right, top, bottom);
+    let rows = [];
+    let cols = [];
+    let tiles = [];
+    let l, r, t, b, n_cols, n_rows, stage;
+    for (let iter = 0; iter < s.length; iter++) {
+      stage = s[iter];
+
+      // Check tile layout
+      if (stage.cols == 0 || stage.rows == 0) { continue; }
+
+      // Adjust coordinate space
+      l = left - stage.getLeft();
+      r = right - stage.getLeft();
+      t = top - stage.getTop();
+      b = bottom - stage.getTop();
+
+      // Use integer division to check row/col
+      let l_col = Math.floor(l / (stage.dimensions.w / stage.cols));
+      let r_col = Math.floor(r / (stage.dimensions.w / stage.cols));
+      let t_row = Math.floor(t / (stage.dimensions.h / stage.rows));
+      let b_row = Math.floor(b / (stage.dimensions.h / stage.rows));
+
+      // row indexes for defined area of stage
+      if (t_row >= stage.rows || b_row >= stage.rows) {
+        alert("player outside of stage row limit ?!");
+        return tiles;
+      } else if (t_row == b_row) {
+        rows.push(t_row);
+      } else {
+        rows.push(t_row);
+        rows.push(b_row);
+      }
+
+      // column indexes for defined area of stage
+      if (l < 0) {
+        cols.push(r_col);
+      } else if (r > stage.dimensions.w) {
+        cols.push(l_col);
+      } else if (l_col == r_col) {
+        cols.push(l_col);
+      } else {
+        cols.push(l_col);
+        cols.push(r_col);
+      }
+
+      for (let i = 0; i < cols.length; i++) {
+        for (let j = 0; j < rows.length; j++) {
+          let col = cols[i];
+          let row = rows[j];
+          tiles.push(stage.tiles[col][row]);
+        }
+      }
+    }
+    return tiles;
+  }
+
 }
