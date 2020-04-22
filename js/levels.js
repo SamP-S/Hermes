@@ -93,16 +93,17 @@ class Stage extends Base_Object {
     this.rows = rows;
 
     this.tiles = [];
-    let col = [];   // what the fuck is 'col'
+    let col = [];
     let x = this.pos.x;
     let y = this.pos.y;
     let t;
 
     // how is this orientated ?? please comment in :)
+    // top on left -> bottom on right
     let grid = [
-      [1, 0, 1],
-      [1, 1, 1],
-      [1, 2, 0],
+      [1, 0, 1],  // col 0
+      [1, 1, 1],  // col 1
+      [1, 2, 0],  // etc
       [1, 3, 1],
       [1, 4, 0],
       [1, 5, 1]
@@ -144,7 +145,9 @@ class Level extends Base_Object {
     else { this.type += "_static"; }
     this.id = id;
     this.stages = [];
-    this.stages.push(new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [0, 0], "test_stage", this.stages.length , 6, 3 ));
+    let hold = g.renderer.domElement.width;
+    this.stages.push(new Stage( [hold, g.renderer.domElement.height], [0, 0], "test_stage", this.stages.length , 6, 3 ));
+    this.stages.push(new Stage( [hold, g.renderer.domElement.height], [hold, 0], "test_stage2", this.stages.length , 6, 3 ));
     this.sprites = [];
     this.sprites.push(new Player());
   }
@@ -153,6 +156,13 @@ class Level extends Base_Object {
   update() {
     // If static then leave
     if (this.id != -1) { return ; }
+    /* if (this.pos.x > g.renderer.domElement.width * 0.8) {
+      this.stages.push(new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [0, 0], "test_stage", this.stages.length , 6, 3 ));
+    }
+    if (this.pos.x > g.renderer.domElement.width) {
+      this.stages.pop();
+      this.pos.x -= g.renderer.domElement.width;
+    } */
   }
 
   // Move function as the level moves not the player
