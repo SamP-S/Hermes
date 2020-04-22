@@ -93,6 +93,7 @@ function main() {
   //console.log("move time:", timer.getTime());
 
   level.render(g);
+  level.update();
   //console.log("levelRender time:", timer.getTime());
 
   player_processing();
