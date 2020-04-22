@@ -269,17 +269,17 @@ drawRectangle(pixel_x, pixel_y, pixel_w, pixel_h, colour) {
   this.draw.scene.children[0].material.color.setHex( colour );
   this.draw.scene.children[0].geometry.scale(world_w, world_h, 1);
   this.draw.scene.children[0].geometry.translate(t.x, t.y, 0);
-  console.log("drawRectangle preprocessing time ", timer.getTime());
+  // console.log("drawRectangle preprocessing time ", timer.getTime());
 
   // Draw Call
   this.render(this.draw.scene);
-  console.log("drawRectangle render time ", timer.getTime());
+  // console.log("drawRectangle render time ", timer.getTime());
 
   this.draw.scene.children[0].geometry.translate(-t.x, -t.y, 0);
   let div_w = 1 / world_w;
   let div_h = 1 / world_h;
   this.draw.scene.children[0].geometry.scale(div_w, div_h, 1);
-  console.log("drawRectangle postprocessing time ", timer.getTime());
+  // console.log("drawRectangle postprocessing time ", timer.getTime());
 }
 
 // Simplified Draw call by passing an objects scene
