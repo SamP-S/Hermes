@@ -70,10 +70,10 @@ function player_processing() {
     offsets.push({X:t[i].pos.x + stage.pos.x, y:t[i].pos.y + stage.pos.y});
   }
 
-
   let hold = object_preprocessing(t);
   player_movement();
   level.sprites[0].move(deltaTime/1000, hold[0], hold[1]);
+
  }
 
 function main() {
@@ -83,7 +83,9 @@ function main() {
 
 
   // Moved the player properties display cause i wanted it but not the movement
-  document.getElementById('is-it-moving').innerHTML = `x : ${level.sprites[0].pos.x.toFixed(2)}, y : ${level.sprites[0].pos.y.toFixed(2)} \ dx: ${level.sprites[0].deltas.dx.toFixed(2)}, dy : ${level.sprites[0].deltas.dy.toFixed(2)}`;
+  document.getElementById('is-it-moving').innerHTML = `<p> x : ${level.sprites[0].pos.x.toFixed(2)}, y : ${level.sprites[0].pos.y.toFixed(2)}
+                                            \ dx: ${level.sprites[0].deltas.dx.toFixed(2)}, dy : ${level.sprites[0].deltas.dy.toFixed(2)} </p>
+                                            <p> state of A key : ${keyboard.GetKeyState('A')}</p>`;
 
   // asks for new frame for rendering
   requestAnimationFrame(main);
