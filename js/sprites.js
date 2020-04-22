@@ -16,6 +16,29 @@ class Player extends Base_Sprite {
     if (this.deltas.dy == 0) this.states.jumping = false;
   }
 
+  move(time=0.01, all_objects=[], object_offsets=[ {x:0, y:0}] ) {
+
+    this.physics()
+
+    this.check_max_speeds();
+
+    //this.pos.x += this.deltas.dx * time;
+
+    if (!this.legal_move(all_objects, object_offsets)){
+      this.pos.x -= this.deltas.dx * time;
+      this.deltas.dx = 0;
+    }
+
+    this.pos.y += this.deltas.dy * time;
+
+    if (!this.legal_move(all_objects, object_offsets)){
+      this.pos.y -= this.deltas.dy * time;
+      this.deltas.dy *= 0.5;
+      if (this.deltas.dy > 0) this.states.jumping = false;
+    }
+  }
+
+
   // checks if have collided with enemy and docks a life if has
   check_enemies(enemies){
     var health_state = this.states.health.state
