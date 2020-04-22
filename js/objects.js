@@ -62,7 +62,6 @@ class Base_Sprite extends Base_Object {
     this.deltas.dx *= (1 - (this.mass / 2000)); // friction
     // TODO when player height is confirmed come back here and make it real-world ish
     this.deltas.dy += (this.mass * GRAVITY - AIR_RESIST) / this.mass;
-    // if (/* this.pos.y > 300 && this.deltas.dy > 0*/ this.deltas.dy < 10) this.deltas.dy = 0;
   }
 
   check_max_speeds(){
