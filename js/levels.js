@@ -211,6 +211,7 @@ class Level extends Base_Object {
     return s;
   }
 
+  // this doesn't work as expected
   getTiles(left, right, top, bottom) {
     let s = this.getStages(left, right, top, bottom);
     let rows = [];
