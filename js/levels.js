@@ -146,9 +146,8 @@ class Level extends Base_Object {
     else { this.type += "_static"; }
     this.id = id;
     this.stages = [];
-    let hold = g.renderer.domElement.width;
-    this.stages.push(new Stage( [hold, g.renderer.domElement.height], [0, 0], "test_stage", this.stages.length , 6, 3 ));
-    this.stages.push(new Stage( [hold, g.renderer.domElement.height], [hold, 0], "test_stage2", this.stages.length , 6, 3 ));
+    this.stages.push(new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [0, 0], "test_stage", this.stages.length , 6, 3 ));
+    this.stages.push(new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [g.renderer.domElement.width, 0], "test_stage2", this.stages.length , 6, 3 ));
     this.sprites = [];
     this.sprites.push(new Player());
   }
@@ -167,7 +166,6 @@ class Level extends Base_Object {
   }
 
   // Move function as the level moves not the player
-  // but should keep it relative to player physics
   move(time) {
     // horizontal movity move
     this.pos.x -= this.sprites[0].deltas.dx * time;
@@ -189,6 +187,7 @@ class Level extends Base_Object {
   // Min 1
   // Max 2
   // Used in getTiles
+
   getStages(left, right, top, bottom) {
     let s = [];
     let l, r;
@@ -200,7 +199,7 @@ class Level extends Base_Object {
       if (left > l && left < r && right > l && right < r) {
         s.push(this.stages[i]);
         break;
-      } else if (left > l && left) {
+      } else if (left > l && left < r) {    // does && left simply mean checking left is !== 0 ?? -- yes that was the problem lmao
         s.push(this.stages[i]);
         continue;
       } else if (right > l && right < r) {
@@ -222,7 +221,7 @@ class Level extends Base_Object {
       stage = s[iter];
 
       // Check tile layout
-      if (stage.cols == 0 || stage.rows == 0) { continue; }
+      if (stage.cols == 0 || stage.rows == 0) { continue; }   // this is redundant ??
 
       // Adjust coordinate space
       l = left - stage.getLeft();
