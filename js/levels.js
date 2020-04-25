@@ -187,7 +187,7 @@ class Level extends Base_Object {
   add_stage() {
     let last_stage = this.stages[this.stages.length - 1];
     let new_x = last_stage.pos.x + last_stage.dimensions.w;
-    let new_stage_num = last_stage.id++;
+    let new_stage_num = last_stage.id + 1;
     this.stages.push( new Stage([g.renderer.domElement.width, g.renderer.domElement.height], [new_x, 0], "level_stage", new_stage_num, 6, 3) );
   }
 
