@@ -13,6 +13,14 @@ const TILE = {
   TRAP_CEILING : 5
 }
 
+function pop_head(arr=[0,0]) {
+  let new_arr = [];
+  for (let i = 1; i < arr.length; i++) {
+    new_arr.push(arr[i]);
+  }
+  return new_arr;
+}
+
 /*
 Thesis on Level Design:
 Cause of the game being continuous the level cannot be static unless we made some form of "single player" or "level" game mode which may be possible later.
@@ -93,16 +101,18 @@ class Stage extends Base_Object {
     this.rows = rows;
 
     this.tiles = [];
-    let col = [];   // what the fuck is 'col'
-    let x = this.pos.x;
-    let y = this.pos.y;
+    let col = [];
+    // x starts at 0 as is relative to stage position - changed from stage.pos.x in earlier version
+    let x = 0;
+    let y = 0;
     let t;
 
     // how is this orientated ?? please comment in :)
+    // top on left -> bottom on right
     let grid = [
-      [1, 0, 1],
-      [1, 1, 1],
-      [1, 2, 0],
+      [1, 0, 1],  // col 0
+      [1, 1, 1],  // col 1
+      [1, 2, 0],  // etc
       [1, 3, 1],
       [1, 4, 0],
       [1, 5, 1]
@@ -144,7 +154,8 @@ class Level extends Base_Object {
     else { this.type += "_static"; }
     this.id = id;
     this.stages = [];
-    this.stages.push(new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [0, 0], "test_stage", this.stages.length , 6, 3 ));
+    this.stages.push(new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [0, 0], "level_stage", this.stages.length , 6, 3 ));
+    this.stages.push(new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [g.renderer.domElement.width, 0], "level_stage", this.stages.length , 6, 3 ));
     this.sprites = [];
     this.sprites.push(new Player( [5, 5], [g.renderer.domElement.width / 2 - (5 / 2), 0] ));
   }
@@ -153,10 +164,34 @@ class Level extends Base_Object {
   update() {
     // If static then leave
     if (this.id != -1) { return ; }
+
+    /* pos mod width
+      if gone too far -- add new stage onto end
+      if outside of stage.head() + 100 -- pop
+      */
+
+    if (this.stages.length < 3) {
+      let s_width = g.renderer.domElement.width;
+      if (Math.abs(this.pos.x) % s_width > s_width * 0.8 ) {
+        this.add_stage();
+      }
+    } else {
+      let first_stage = this.stages[0];
+      let stage_right = first_stage.pos.x + first_stage.dimensions.w;
+      if ( Math.abs(this.pos.x) > stage_right*1.1) {
+        this.stages = pop_head(this.stages)
+      }
+    }
+  }
+
+  add_stage() {
+    let last_stage = this.stages[this.stages.length - 1];
+    let new_x = last_stage.pos.x + last_stage.dimensions.w;
+    let new_stage_num = last_stage.id + 1;
+    this.stages.push( new Stage([g.renderer.domElement.width, g.renderer.domElement.height], [new_x, 0], "level_stage", new_stage_num, 6, 3) );
   }
 
   // Move function as the level moves not the player
-  // but should keep it relative to player physics
   move(time) {
     // horizontal movity move
     this.pos.x -= this.sprites[0].deltas.dx * time;
@@ -185,6 +220,7 @@ class Level extends Base_Object {
   // Min 1
   // Max 2
   // Used in getTiles
+
   getStages(left, right, top, bottom) {
     let s = [];
     let l, r;
@@ -196,7 +232,7 @@ class Level extends Base_Object {
       if (left > l && left < r && right > l && right < r) {
         s.push(this.stages[i]);
         break;
-      } else if (left > l && left) {
+      } else if (left > l && left < r) {    // does && left simply mean checking left is !== 0 ?? -- yes that was the problem lmao
         s.push(this.stages[i]);
         continue;
       } else if (right > l && right < r) {
@@ -217,7 +253,7 @@ class Level extends Base_Object {
       stage = s[iter];
 
       // Check tile layout
-      if (stage.cols == 0 || stage.rows == 0) { continue; }
+      if (stage.cols == 0 || stage.rows == 0) { continue; }   // this is redundant ??
 
       // Adjust coordinate space
       l = left - stage.getLeft();

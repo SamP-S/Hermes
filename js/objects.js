@@ -121,11 +121,11 @@ class Base_Sprite extends Base_Object {
 
       objects.forEach((object, i) => {
         if (this.collided(object, object_offsets[i])){
-          console.log("legal move returns false");
+          // console.log("legal move returns false");
           toReturn = false;
         }
       });
-      console.log("legal move returns true");
+      // console.log("legal move returns true");
       return toReturn;
     }
 
