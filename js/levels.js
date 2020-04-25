@@ -13,6 +13,14 @@ const TILE = {
   TRAP_CEILING : 5
 }
 
+function pop_head(arr=[0,0]) {
+  let new_arr = [];
+  for (let i = 1; i < arr.length; i++) {
+    new_arr.push(arr[i]);
+  }
+  return new_arr;
+}
+
 /*
 Thesis on Level Design:
 Cause of the game being continuous the level cannot be static unless we made some form of "single player" or "level" game mode which may be possible later.
@@ -146,8 +154,8 @@ class Level extends Base_Object {
     else { this.type += "_static"; }
     this.id = id;
     this.stages = [];
-    this.stages.push(new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [0, 0], "test_stage", this.stages.length , 6, 3 ));
-    this.stages.push(new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [g.renderer.domElement.width, 0], "test_stage2", this.stages.length , 6, 3 ));
+    this.stages.push(new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [0, 0], "level_stage", this.stages.length , 6, 3 ));
+    this.stages.push(new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [g.renderer.domElement.width, 0], "level_stage", this.stages.length , 6, 3 ));
     this.sprites = [];
     this.sprites.push(new Player());
   }
@@ -162,7 +170,25 @@ class Level extends Base_Object {
       if outside of stage.head() + 100 -- pop
       */
 
+    if (this.stages.length < 3) {
+      let s_width = g.renderer.domElement.width;
+      if (Math.abs(this.pos.x) % s_width > s_width * 0.8 ) {
+        this.add_stage();
+      }
+    } else {
+      let first_stage = this.stages[0];
+      let stage_right = first_stage.pos.x + first_stage.dimensions.w;
+      if ( Math.abs(this.pos.x) > stage_right*1.1) {
+        this.stages = pop_head(this.stages)
+      }
+    }
+  }
 
+  add_stage() {
+    let last_stage = this.stages[this.stages.length - 1];
+    let new_x = last_stage.pos.x + last_stage.dimensions.w;
+    let new_stage_num = last_stage.id++;
+    this.stages.push( new Stage([g.renderer.domElement.width, g.renderer.domElement.height], [new_x, 0], "level_stage", new_stage_num, 6, 3) );
   }
 
   // Move function as the level moves not the player
