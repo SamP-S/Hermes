@@ -162,7 +162,12 @@ class Level extends Base_Object {
     this.pos.x -= this.sprites[0].deltas.dx * time;
     this.sprites[0].pos.x += this.sprites[0].deltas.dx * time;
     this.sprites[0].distance += this.sprites[0].deltas.dx * time;
-    document.getElementById("distance").innerHTML = "Distance = " + Math.floor(this.sprites[0].distance).toString();
+
+    // Dinstance score yee
+    let d = document.getElementById("distance").innerHTML.replace(/Distance = /, '');
+    if (document.getElementById("distance").innerHTML == "" || d < Math.floor(this.sprites[0].distance)) {
+      document.getElementById("distance").innerHTML = "Distance = " + Math.floor(this.sprites[0].distance).toString();
+    }
 
     // vertical player movement doesn't move the level (as I understand it) <-- correct :)
   }
