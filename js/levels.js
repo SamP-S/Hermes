@@ -156,13 +156,13 @@ class Level extends Base_Object {
   update() {
     // If static then leave
     if (this.id != -1) { return ; }
-    /* if (this.pos.x > g.renderer.domElement.width * 0.8) {
-      this.stages.push(new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [0, 0], "test_stage", this.stages.length , 6, 3 ));
-    }
-    if (this.pos.x > g.renderer.domElement.width) {
-      this.stages.pop();
-      this.pos.x -= g.renderer.domElement.width;
-    } */
+
+    /* pos mod width
+      if gone too far -- add new stage onto end
+      if outside of stage.head() + 100 -- pop
+      */
+
+
   }
 
   // Move function as the level moves not the player
@@ -210,7 +210,6 @@ class Level extends Base_Object {
     return s;
   }
 
-  // this doesn't work as expected
   getTiles(left, right, top, bottom) {
     let s = this.getStages(left, right, top, bottom);
     let rows = [];
