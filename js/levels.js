@@ -146,7 +146,7 @@ class Level extends Base_Object {
     this.stages = [];
     this.stages.push(new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [0, 0], "test_stage", this.stages.length , 6, 3 ));
     this.sprites = [];
-    this.sprites.push(new Player());
+    this.sprites.push(new Player( [5, 5], [g.renderer.domElement.width / 2 - (5 / 2), 0] ));
   }
 
   // Use to append or pop stages from the list according to the player position
@@ -161,8 +161,10 @@ class Level extends Base_Object {
     // horizontal movity move
     this.pos.x -= this.sprites[0].deltas.dx * time;
     this.sprites[0].pos.x += this.sprites[0].deltas.dx * time;
+    this.sprites[0].distance += this.sprites[0].deltas.dx * time;
+    document.getElementById("distance").innerHTML = "Distance = " + Math.floor(this.sprites[0].distance).toString();
 
-    // vertical player movement doesn't move the level (as I understand it)
+    // vertical player movement doesn't move the level (as I understand it) <-- correct :)
   }
 
   render(graphics) {

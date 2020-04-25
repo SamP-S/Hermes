@@ -2,6 +2,7 @@ class Player extends Base_Sprite {
   constructor(dimensions=[5, 5], start_pos = [20, 20]){
     super(dimensions, start_pos, "sprite_player", COLOURS.WHITE, 3,
          {health: {time: 0, timeLim: 10^10, state: "vibin"}, jumping: false, dbljump: false}, 80);
+    this.distance = 0.00;
   }
 
   hit() {
@@ -26,6 +27,7 @@ class Player extends Base_Sprite {
 
     if (!this.legal_move(all_objects, object_offsets)){
       this.pos.x -= this.deltas.dx * time;
+      this.distance -= this.deltas.dx * time;
       this.deltas.dx = 0;
     }
 
@@ -36,6 +38,7 @@ class Player extends Base_Sprite {
       this.deltas.dy *= 0.5;
       if (this.deltas.dy > 0) this.states.jumping = false;
     }
+
   }
 
 
