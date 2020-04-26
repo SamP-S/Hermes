@@ -157,7 +157,7 @@ class Level extends Base_Object {
     this.stages.push(new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [0, 0], "level_stage", this.stages.length , 6, 3 ));
     this.stages.push(new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [g.renderer.domElement.width, 0], "level_stage", this.stages.length , 6, 3 ));
     this.sprites = [];
-    this.sprites.push(new Player( [5, 5], [g.renderer.domElement.width / 2 - (5 / 2), 0] ));
+    this.sprites.push(new Player( [5, 5], [g.renderer.domElement.width / 2 - (5 / 2), 0], g ));
   }
 
   // Use to append or pop stages from the list according to the player position
