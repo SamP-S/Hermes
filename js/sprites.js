@@ -1,7 +1,12 @@
 class Player extends Base_Sprite {
-  constructor(dimensions=[5, 5], start_pos = [20, 20]){
+  // N.B. dimensions no longer necessary param. Left in to prevent logic error from brewing but can be removed 
+  constructor(dimensions=[5, 5], start_pos = [20, 20], g_eng = null){
+    if (!g_eng) {alert("no graphics engine to player");}
+    let wind_w = g_eng.renderer.domElement.width;
+    dimensions = [wind_w*0.005, wind_w*0.005];
+    let max_d = [wind_w*0.3, wind_w*0.3];
     super(dimensions, start_pos, "sprite_player", COLOURS.WHITE, 3,
-         {health: {time: 0, timeLim: 10^10, state: "vibin"}, jumping: false, dbljump: false}, 80);
+         {health: {time: 0, timeLim: 10^10, state: "vibin"}, jumping: false, dbljump: false}, 80, 0, max_d);
     this.distance = 0.00;
   }
 
