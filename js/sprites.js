@@ -1,4 +1,5 @@
 class Player extends Base_Sprite {
+  // N.B. dimensions no longer necessary param. Left in to prevent logic error from brewing but can be removed 
   constructor(dimensions=[5, 5], start_pos = [20, 20], g_eng = null){
     if (!g_eng) {alert("no graphics engine to player");}
     let wind_w = g_eng.renderer.domElement.width;
