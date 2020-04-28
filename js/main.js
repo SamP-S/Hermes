@@ -4,7 +4,6 @@
 var keyboard = new Keyboard();
 var gameNotOver = true;
 var g = new Graphics();
-//var test = new Test_Object();
 var timer = new Timer();
 
 function player_movement() {
@@ -27,7 +26,6 @@ function player_movement() {
 var deltaTime = 0.00;
 timer.start();
 
-//var stage = new Stage( [g.renderer.domElement.width, g.renderer.domElement.height], [0, 0], "test_stage", 6, 3 );
 var level = new Level( [g.renderer.domElement.width, g.renderer.domElement.height], [0, 0], "test_level" );
 
 // WebGL compatibility check
@@ -80,24 +78,14 @@ function main() {
   deltaTime = timer.getTime();
   timer.reset();
 
-
-  // Moved the player properties display cause i wanted it but not the movement
   document.getElementById('is-it-moving').innerHTML = `<p> x : ${level.sprites[0].pos.x.toFixed(2)}, y : ${level.sprites[0].pos.y.toFixed(2)}
                                             \ dx: ${level.sprites[0].deltas.dx.toFixed(2)}, dy : ${level.sprites[0].deltas.dy.toFixed(2)} </p>`;
 
-  // asks for new frame for rendering
   requestAnimationFrame(main);
-  //console.log("requestAnimationFrame time:", timer.getTime());
-
   level.move(deltaTime/1000);
-  //console.log("move time:", timer.getTime());
-
   level.render(g);
   level.update();
-  //console.log("levelRender time:", timer.getTime());
 
   player_processing();
-  //console.log("playerProcessing time:", timer.getTime());
-  //render_objects();
 
 }

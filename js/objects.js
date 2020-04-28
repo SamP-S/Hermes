@@ -48,7 +48,6 @@ class Base_Sprite extends Base_Object {
     this.lives = lives;
     this.states = states;
     this.row = row;
-    // TODO eventually change deltas to be % of screen
     this.max_deltas = {max_x : max_deltas[0], max_y : max_deltas[1]};
   }
 
@@ -76,18 +75,15 @@ class Base_Sprite extends Base_Object {
   move(time=0.01, all_objects=[], object_offsets=[ {x:0, y:0}] ) {
 
     this.physics()
-
     this.check_max_speeds();
 
-    //this.pos.x += this.deltas.dx * time;
-
+    this.pos.x += this.deltas.dx * time;
     if (!this.legal_move(all_objects, object_offsets)){
       this.pos.x -= this.deltas.dx * time;
       this.deltas.dx = 0;
     }
 
     this.pos.y += this.deltas.dy * time;
-
     if (!this.legal_move(all_objects, object_offsets)){
       this.pos.y -= this.deltas.dy * time;
       this.deltas.dy *= 0.5;
@@ -95,9 +91,6 @@ class Base_Sprite extends Base_Object {
   }
 
   // only deals with rectangular objects -- implement SAT if need to deal with more complex shapes
-  // TODO fix this u shit mofo -- it's done jheez calm your tits someone's in a bad mood
-  // okay so it was less fixed than was initially believed
-  // is fixed now though:)
     collided(object, object_offset){
       if (this.getLeft() < object.getRight() + object_offset.x &&
           this.getRight() > object.getLeft() + object_offset.x &&
@@ -121,11 +114,9 @@ class Base_Sprite extends Base_Object {
 
       objects.forEach((object, i) => {
         if (this.collided(object, object_offsets[i])){
-          // console.log("legal move returns false");
           toReturn = false;
         }
       });
-      // console.log("legal move returns true");
       return toReturn;
     }
 
@@ -133,7 +124,6 @@ class Base_Sprite extends Base_Object {
 
 class Base_Static extends Base_Object {
   constructor(dimensions = [0,0], pos = [0, 0], type = "static", colour = COLOURS.LGREY, isTrap = false) {
-    // sort it out soom :)
     super(dimensions, pos, type);
     this.colour = colour;
     this.isTrap = isTrap;

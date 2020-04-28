@@ -107,7 +107,6 @@ class Stage extends Base_Object {
     let y = 0;
     let t;
 
-    // how is this orientated ?? please comment in :)
     // top on left -> bottom on right
     let grid = [
       [1, 0, 1],  // col 0
@@ -165,11 +164,6 @@ class Level extends Base_Object {
     // If static then leave
     if (this.id != -1) { return ; }
 
-    /* pos mod width
-      if gone too far -- add new stage onto end
-      if outside of stage.head() + 100 -- pop
-      */
-
     if (this.stages.length < 3) {
       let s_width = g.renderer.domElement.width;
       if (Math.abs(this.pos.x) % s_width > s_width * 0.8 ) {
@@ -204,7 +198,6 @@ class Level extends Base_Object {
       document.getElementById("distance").innerHTML = "Distance = " + Math.floor(this.sprites[0].distance).toString();
     }
 
-    // vertical player movement doesn't move the level (as I understand it) <-- correct :)
   }
 
   render(graphics) {
@@ -216,10 +209,7 @@ class Level extends Base_Object {
     }
   }
 
-  // Get list of stages the player is in
-  // Min 1
-  // Max 2
-  // Used in getTiles
+  // Get list of stages the player is in -- Used in getTiles
 
   getStages(left, right, top, bottom) {
     let s = [];
@@ -232,7 +222,7 @@ class Level extends Base_Object {
       if (left > l && left < r && right > l && right < r) {
         s.push(this.stages[i]);
         break;
-      } else if (left > l && left < r) {    // does && left simply mean checking left is !== 0 ?? -- yes that was the problem lmao
+      } else if (left > l && left < r) {
         s.push(this.stages[i]);
         continue;
       } else if (right > l && right < r) {

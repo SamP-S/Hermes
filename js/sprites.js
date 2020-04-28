@@ -88,19 +88,6 @@ class Player extends Base_Sprite {
     this.u_health(u_time);
   }
 
-  // update with accurate values later - this is template
-  // don't think we need ??
-  check_row(){
-    if (this.pos.y > 400){
-      this.row = 0;
-    } else if (this.pos.y > 200) {
-      this.row = 1;
-    } else {
-      this.row = 2;
-    }
-    super.move();
-  }
-
 };
 
 class Ogre extends Base_Sprite {
