@@ -22,8 +22,9 @@ class Player extends Base_Sprite {
   }
 
   hit() {
+    this.lives -= 1;
     this.states.health.time     = 0;
-    this.states.health.time_lim = 2000;
+    this.states.health.time_lim = 1.2;
     this.states.health.state    = "hurtin";
 
     this.check_dead();
@@ -79,6 +80,7 @@ class Player extends Base_Sprite {
       this.states.health.time_lim = 10^10;
       this.states.health.state    = "vibin";
     }
+    document.getElementById('lives').innerHTML = `<p> Lives: ${this.lives}</p>`;
   }
 
   update(u_time=0.01, u_all_objects=[], u_object_offsets=[ {x:0, y:0}] ) {
