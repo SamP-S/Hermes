@@ -1,5 +1,5 @@
 class Player extends Base_Sprite {
-  // N.B. dimensions no longer necessary param. Left in to prevent logic error from brewing but can be removed 
+  // N.B. dimensions no longer necessary param. Left in to prevent logic error from brewing but can be removed
   constructor(dimensions=[5, 5], start_pos = [20, 20], g_eng = null){
     if (!g_eng) {alert("no graphics engine to player");}
     let wind_w = g_eng.renderer.domElement.width;
@@ -19,7 +19,25 @@ class Player extends Base_Sprite {
 
   physics() {
     super.physics();
-    if (this.deltas.dy == 0) this.states.jumping = false;
+    if (this.deltas.dy == 0) this.states.jumping = false;   // TODO there's a very low chance of jumping being set to false mid jumping
+    if (this.lives == 0) {                                  // do we leave or go to trouble of fixing ??
+      alert("Bruh you got dedded");
+      // gameover
+    }
+  }
+
+  collided(object, object_offset){
+    if (this.getLeft() < object.getRight() + object_offset.x &&
+        this.getRight() > object.getLeft() + object_offset.x &&
+        this.getTop() < object.getBottom() + object_offset.y &&
+        this.getBottom() > object.getTop() + object_offset.y) {
+          if (this.states.health == "vibin" && object.isTrap) {
+            this.hit();
+          }
+          return true;
+    } else {
+        return false;
+      }
   }
 
   move(time=0.01, all_objects=[], object_offsets=[ {x:0, y:0}] ) {
