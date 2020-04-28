@@ -16,7 +16,6 @@ function player_movement() {
   if (keyboard.GetKeyState('W') && !level.sprites[0].states.jumping) {
     level.sprites[0].deltas.dy -= 500;
     level.sprites[0].states.jumping = true;
-
   }
 
   if (keyboard.GetKeyState('D')) {
@@ -72,7 +71,7 @@ function player_processing() {
 
   let hold = object_preprocessing(t);
   player_movement();
-  level.sprites[0].move(deltaTime/1000, hold[0], hold[1]);
+  level.sprites[0].update(deltaTime/1000, hold[0], hold[1]);
 
  }
 
